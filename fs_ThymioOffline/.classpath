@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="/JBotSim/jafama.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/JBotEvolver"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CommonInterface"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Behaviors"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/JBotSim"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/EvolutionAutomator"/>
+	<classpathentry kind="lib" path="/home/fernando/Dropbox/real-robot-experiments/CommonInterface/lib/joda-time-2.4.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/JBotAquatic"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
