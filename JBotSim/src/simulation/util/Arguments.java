@@ -29,15 +29,15 @@ import mathutils.Vector2d;
  * how to parse them:
  * <p>
  * Non-case sensitive,parses parenthesis correctly
- * 
+ *
  * @author alc
- * 
+ *
  */
 
 public class Arguments implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -60,13 +60,13 @@ public class Arguments implements Serializable {
 	 * Vector of the values for the arguments in "arguments".
 	 */
 	protected Vector<String> values = new Vector<String>();
-	
+
 	protected String loadedFile = "";
 
 	/**
 	 * Initializes a new arguments instance and sets all arguments to
 	 * non-queried.
-	 * 
+	 *
 	 * @param unparsedArgumentString
 	 *            Raw, unparsed argument string.
 	 * @throws MultipleClassDefinitionException
@@ -84,13 +84,13 @@ public class Arguments implements Serializable {
 		parseString(unparsedArgumentString);
 		removeRepeated();
 	}
-	
+
 	private void removeRepeated() {
 		Iterator<String> iArgs = arguments.iterator();
 		Iterator<String> iValues = values.iterator();
-		
+
 		ArrayList<String> found = new ArrayList<String>();
-		
+
 		while(iArgs.hasNext()) {
 			String current = iArgs.next();
 			iValues.next();
@@ -102,7 +102,7 @@ public class Arguments implements Serializable {
 			}
 		}
 	}
-	
+
 	public static String replaceAndGetArguments(String argName, String arg ,String by,List<String> removedStrings){
 		Pattern p = Pattern.compile(argName+"=\\w*(\\.\\w*)*");
 	 	Matcher m = p.matcher(arg);
@@ -116,17 +116,17 @@ public class Arguments implements Serializable {
 	 	}
 		return arg;
 	}
-	
+
 	public static String repleceTagByStrings(String argName, String arg, String tag, List<String> newStrings){
 		for(String s : newStrings)
 			arg = arg.replaceFirst(tag, argName+"="+s);
 		return arg;
 	}
-	
+
 	private String translateClasses(String arg) {
 		Pattern p = Pattern.compile("classname=\\w*(\\.\\w*)*");
 	 	Matcher m = p.matcher(arg);
-	 	
+
 	 	LinkedList<String> strings = new LinkedList<String>();
 		while(m.find()) {
 			String found = m.group();
@@ -135,15 +135,15 @@ public class Arguments implements Serializable {
 			arg = m.replaceFirst("__PLACEHOLDER__");
 			m = p.matcher(arg);
 	 	}
-		
+
 		for(int i = 0 ; i < strings.size() ; i++) {
 			List<String> names = ClassSearchUtils.searchFullNameInPath(strings.get(i));
 			if (names.size() == 0) {
 				String[] split = strings.get(i).split("\\.");
 				names = ClassSearchUtils.searchFullNameInPath(split[split.length-1]);
-				
+
 				if (names.size() == 0) {
-					
+
 					//We're really sorry for this crappy code, but we needed this for legacy support :( authors: Miguel and Tiago
 					if(strings.get(i).endsWith("NNInput")) {
 						List<String> sensorinputnames = ClassSearchUtils.searchFullNameInPath("SensorNNInput");
@@ -164,7 +164,7 @@ public class Arguments implements Serializable {
 			}
 			strings.set(i, names.get(0));
 		}
-		
+
 		for(String s : strings)
 			arg = arg.replaceFirst("__PLACEHOLDER__", CLASS_NAME_TAG+"="+s);
 		return arg;
@@ -191,15 +191,15 @@ public class Arguments implements Serializable {
 
 	/**
 	 * Parses a string of arguments.
-	 * 
+	 *
 	 * @param unparsedArgumentString
 	 *            the raw, unparsed argument string.
 	 */
 	protected void parseString(String unparsedArgumentString) {
-		
+
 		if(unparsedArgumentString==null)
 			return;
-		
+
 		this.unparsedArgumentString = unparsedArgumentString;
 
 		int stringIndex = 0;
@@ -255,7 +255,7 @@ public class Arguments implements Serializable {
 
 	/**
 	 * Get the String value of an argument.
-	 * 
+	 *
 	 * @param argument
 	 *            case insensitive name of the argument
 	 * @return the value of the argument or null if the argument does not exist
@@ -281,7 +281,7 @@ public class Arguments implements Serializable {
 
 	/**
 	 * Query an argument to discover if it is defined.
-	 * 
+	 *
 	 * @param argument
 	 *            case insensitive name of the argument
 	 * @return true if the argument was defined, false otherwise.
@@ -297,7 +297,7 @@ public class Arguments implements Serializable {
 	/**
 	 * Get the int value of an argument. Use {@link #getArgumentIsDefined} to
 	 * query if the argument is defined before calling this method.
-	 * 
+	 *
 	 * @param argument
 	 *            case insensitive name of the argument
 	 * @return the int value of the argument or 0 if the argument does not
@@ -310,7 +310,7 @@ public class Arguments implements Serializable {
 	/**
 	 * Get the double value of an argument or return the default value in case
 	 * the argument does not exist.
-	 * 
+	 *
 	 * @param argument
 	 *            case insensitive name of the argument
 	 * @param defaultValue
@@ -340,7 +340,7 @@ public class Arguments implements Serializable {
 	/**
 	 * Set the value of an argument. If the argument is not define, a new one
 	 * will be added.
-	 * 
+	 *
 	 * @param argument
 	 *            the argument for which a new value should be set
 	 * @value the new value for the argument
@@ -368,7 +368,7 @@ public class Arguments implements Serializable {
 	/**
 	 * Set the value of an argument. If the argument is not define, a new one
 	 * will be added.
-	 * 
+	 *
 	 * @param argument
 	 *            the argument for which a new value should be set
 	 * @value the new value for the argument
@@ -380,7 +380,7 @@ public class Arguments implements Serializable {
 	/**
 	 * Set the value of an argument. If the argument is not define, a new one
 	 * will be added.
-	 * 
+	 *
 	 * @param argument
 	 *            the argument for which a new value should be set
 	 * @value the new value for the argument
@@ -392,7 +392,7 @@ public class Arguments implements Serializable {
 	/**
 	 * Get the double value of an argument. Use {@link #getArgumentIsDefined} to
 	 * query if the argument is defined before calling this method.
-	 * 
+	 *
 	 * @param argument
 	 *            case insensitive name of the argument
 	 * @return the double value of the argument or 0 if the argument does not
@@ -405,7 +405,7 @@ public class Arguments implements Serializable {
 	/**
 	 * Get the double value of an argument or return the default value in case
 	 * the argument does not exist.
-	 * 
+	 *
 	 * @param argument
 	 *            case insensitive name of the argument
 	 * @param defaultValue
@@ -432,7 +432,7 @@ public class Arguments implements Serializable {
 	/**
 	 * Get the String value of an argument. Use {@link #getArgumentIsDefined} to
 	 * query if the argument is defined before calling this method.
-	 * 
+	 *
 	 * @param argument
 	 *            case insensitive name of the argument
 	 * @return the value of the argument or null if the argument does not exist.
@@ -444,7 +444,7 @@ public class Arguments implements Serializable {
 	/**
 	 * Get the String value of an argument or return the default value in case
 	 * the argument does not exist.
-	 * 
+	 *
 	 * @param argument
 	 *            case insensitive name of the argument
 	 * @param defaultValue
@@ -467,10 +467,10 @@ public class Arguments implements Serializable {
 	 * <p>
 	 * Calling getArgumentAsVector2d("startposition") will return a Vector2d
 	 * with x = 1.0 and y = 2.0.
-	 * 
+	 *
 	 * Use {@link #getArgumentIsDefined} to query if the argument is defined
 	 * before calling this method.
-	 * 
+	 *
 	 * @param argument
 	 *            case insensitive name of the argument
 	 * @return the (x,y) value of the argument or null if the argument does not
@@ -496,7 +496,7 @@ public class Arguments implements Serializable {
 	/**
 	 * Get the complete argument String. Any modifications made after the
 	 * arguments were parsed are included.
-	 * 
+	 *
 	 * @return the unparsed string containing all arguments and values
 	 */
 	public String getCompleteArgumentString() {
@@ -504,7 +504,7 @@ public class Arguments implements Serializable {
 		for (int i = 0; i < arguments.size(); i++) {
 			if (sb.length() > 0)
 				sb.append(",");
-			
+
 			sb.append(arguments.get(i));
 			if (values.get(i).length() > 0) {
 				if(values.get(i).contains("=") || values.get(i).contains(","))
@@ -518,7 +518,7 @@ public class Arguments implements Serializable {
 
 	/**
 	 * Get the number of arguments in the rare string.
-	 * 
+	 *
 	 * @return the number of arguments in the raw, unparsed argument string
 	 */
 	public int getNumberOfArguments() {
@@ -531,7 +531,7 @@ public class Arguments implements Serializable {
 	 * not all of the arguments have been queried, the method
 	 * {@link #getUnqueiredArgument} can be used to figure out which arguments
 	 * have not been queried.
-	 * 
+	 *
 	 * @return true if all the arguments have been queried, false otherwise.
 	 */
 	public boolean checkIfAllArgumentsHaveBeenQueried() {
@@ -548,7 +548,7 @@ public class Arguments implements Serializable {
 	/**
 	 * Check if all arguments have been queried. This should be called after
 	 * anyone interested in querying the arguments have had the chance.
-	 * 
+	 *
 	 * @return true if all the arguments have been queried, false otherwise.
 	 */
 	public String getUnqueriedArgument() {
@@ -569,7 +569,7 @@ public class Arguments implements Serializable {
 
 	/**
 	 * Get the argument at a specific index.
-	 * 
+	 *
 	 * @param index
 	 *            index of the argument (the argument name and not its value!)
 	 * @return name of the argument at the specified index.
@@ -580,7 +580,7 @@ public class Arguments implements Serializable {
 
 	/**
 	 * Get the value at a specific index.
-	 * 
+	 *
 	 * @param index
 	 *            index of the value
 	 * @return value argument at the specified index.
@@ -593,7 +593,7 @@ public class Arguments implements Serializable {
 	 * Query if a argument interpreted as a flag is set to true. A flag is on if
 	 * the flag appears in argument list and if is has a value of one of (yes,
 	 * on, 1, enable, enabled, true) otherwise this method will return false.
-	 * 
+	 *
 	 * @see #getFlagIsFalse(String)
 	 * @param argument
 	 *            case insensitive name of the argument
@@ -620,7 +620,7 @@ public class Arguments implements Serializable {
 	 * off, 0, disable, disabled, false) otherwise this method will return
 	 * false. Note, that a flag is not returned as being false if it not
 	 * defined.
-	 * 
+	 *
 	 * @see #getFlagIsTrue(String)
 	 * @param argument
 	 *            case insensitive name of the argument
@@ -645,7 +645,7 @@ public class Arguments implements Serializable {
 	public static HashMap<String, Arguments> parseArgs(String[] args)
 			throws IOException, ClassNotFoundException {
 		String optionsFilename = null;
-		
+
 //		 for(String s : args)
 //			 System.out.println(s);
 
@@ -687,7 +687,7 @@ public class Arguments implements Serializable {
 		// System.out.println(Util.usageToString());
 		// System.exit(0);
 		// }
-		
+
 		if (args[0].charAt(0) != '-') {
 			optionsFilename = args[0];
 			String[] argsFromFile = readOptionsFromFile(optionsFilename);
@@ -741,34 +741,34 @@ public class Arguments implements Serializable {
 				commandLine += "\n";
 			commandLine += s + " ";
 		}
-		
+
 //		Arguments commandLineArguments = new Arguments(commandLine.trim(),true);
 //		result.put("commandline",result);
 		AutoArgumentsGeneration.getAuto(result);
-		
+
 		if(optionsFilename != null && result.get("--output") != null) {
 			String pop = null;
-			
+
 			if(result.containsKey("--population")){
 				pop = result.get("--population").getCompleteArgumentString();
 			}else{
 				pop = result.get("--populationa").getCompleteArgumentString();
 			}
-			
+
 			if(pop != null && pop.contains("load")) {
 				String output = result.get("--output").getCompleteArgumentString();
-				
+
 				String parent = new File(optionsFilename).getParent();
-				
+
 				if(!parent.equals(output)) {
 					result.put("--output", new Arguments(parent));
 				}
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	public static String[] readOptionsFromFile(String filename)
 			throws IOException {
 		String oldString = readContentFromFile(filename);
@@ -780,7 +780,7 @@ public class Arguments implements Serializable {
 		BufferedReader bufferedReader;
 		StringBuffer sb = new StringBuffer();
 		String nextLine;
-		
+
 		bufferedReader = new BufferedReader(new InputStreamReader(
 				new DataInputStream(new FileInputStream(filename))));
 
@@ -815,7 +815,7 @@ public class Arguments implements Serializable {
 
 		return newString.trim().split(" ");
 	}
-	
+
 	public static Arguments createOrPrependArguments(Arguments previous, String newArgumentString) {
 		try {
 			return createOrPrependArguments(previous, newArgumentString,false);
@@ -843,23 +843,23 @@ public class Arguments implements Serializable {
 	public String toString() {
 		return getCompleteArgumentString();
 	}
-	
+
 	public Vector<String> getArguments() {
 		return arguments;
 	}
-	
+
 	public Vector<String> getValues() {
 		return values;
 	}
-	
+
 	public static String beautifyString(String s) {
-		
+
 		int nParenthesis = 0;
 		String newString = "\t";
-		
+
 		for(int i = 0 ; i < s.length(); i++) {
 			char c = s.charAt(i);
-			
+
 			switch(c) {
 				case ',':
 					newString+=",\n";
@@ -882,23 +882,23 @@ public class Arguments implements Serializable {
 		}
 		return newString;
 	}
-	
+
 	public static String repeatString(String s, int n) {
 		String newString = "";
-		
+
 		for(int i = 0 ; i < n ; i++)
 			newString+=s;
-		
+
 		return newString;
 	}
-	
+
 	public void removeArgument(String key) {
 		int index = arguments.indexOf(key);
-		
+
 		if(index >= 0) {
 			arguments.remove(index);
 			values.remove(index);
 		}
 	}
-	
+
 }
