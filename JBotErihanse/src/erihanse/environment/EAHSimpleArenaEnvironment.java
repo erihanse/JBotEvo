@@ -43,8 +43,8 @@ public class EAHSimpleArenaEnvironment extends Environment {
 		placeTargetNest(simulator);
 		placeRobots(simulator);
 		robots.get(0).teleportTo(new Vector2d(-1.5,-1.5));
-		robots.get(1).teleportTo(new Vector2d(-1,-1));
-		robots.get(2).teleportTo(new Vector2d(-0.5,-0.5));
+		// robots.get(1).teleportTo(new Vector2d(-1,-1));
+		// robots.get(2).teleportTo(new Vector2d(-0.5,-0.5));
 		// ((MyDifferentialDriveRobot) robots.get(0)).getHomeRoute();
 	}
 
