@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/pi4j-core.jar" sourcepath="lib/pi4j-core-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/Pi4J_IT_Version/lib/pi4j-core-javadoc.jar!/"/>
@@ -27,5 +26,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/Pi4J_IT_Version/lib/pi4j-service-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
