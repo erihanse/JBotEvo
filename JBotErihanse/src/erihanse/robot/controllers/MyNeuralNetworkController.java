@@ -1,6 +1,6 @@
 package erihanse.robot.controllers;
 
-import erihanse.robot.MyDifferentialDriveRobot;
+import erihanse.robot.ODNetworkRobot;
 import erihanse.robot.sensors.HomeRouteSensor;
 import evolutionaryrobotics.neuralnetworks.NeuralNetworkController;
 import simulation.Simulator;
@@ -15,9 +15,9 @@ public class MyNeuralNetworkController extends NeuralNetworkController {
     @Override
     public void controlStep(double time) {
         super.controlStep(time);
-        ((MyDifferentialDriveRobot) robot)
+        ((ODNetworkRobot) robot)
                 .setSourceHops((int) robot.getSensorByType(HomeRouteSensor.class).getSensorReading(999));
-        ((MyDifferentialDriveRobot) robot)
+        ((ODNetworkRobot) robot)
                 .setDestinationHops((int) robot.getSensorByType(HomeRouteSensor.class).getSensorReading(999));
     }
 }

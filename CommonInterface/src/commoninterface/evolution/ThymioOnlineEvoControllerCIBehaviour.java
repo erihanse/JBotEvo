@@ -73,7 +73,7 @@ public class ThymioOnlineEvoControllerCIBehaviour extends CIBehavior {
 		CIArguments sensorArgs = new CIArguments(args.getArgumentAsString("sensors"));
 		initSensors(sensorArgs);
 
-		CINeuralNetwork net = CINeuralNetwork.getNeuralNetwork( robot, 
+		CINeuralNetwork net = CINeuralNetwork.getNeuralNetwork( robot,
 				new CIArguments(args.getArgumentAsString("network")));
 
 		this.network = (MacroNetwork) net;
@@ -103,10 +103,10 @@ public class ThymioOnlineEvoControllerCIBehaviour extends CIBehavior {
 			}
 			else
 				genes = new ArrayList<ODNEATGene>();
-			
-			
-			this.instance = new ODNEAT(descriptor, this.thymio, func, this.network.getNumberOfInputNeurons(), 
-					this.network.getNumberOfOutputNeurons(), maturationperiod, useMaturation, 
+
+
+			this.instance = new ODNEAT(descriptor, this.thymio, func, this.network.getNumberOfInputNeurons(),
+					this.network.getNumberOfOutputNeurons(), maturationperiod, useMaturation,
 					evalSteps, genes, macroArgs,noEvalPeriod);
 		}
 		else {
@@ -114,8 +114,8 @@ public class ThymioOnlineEvoControllerCIBehaviour extends CIBehavior {
 			String file = args.getArgumentAsString("loadpop") + "_" + this.thymio.getRobotId();
 			ArrayList<ODNEATGenome> genomes = PopulationUtils.loadPopulationFromFile(file,
 					this.network.getNumberOfInputNeurons(), this.network.getNumberOfOutputNeurons());
-			this.instance = new ODNEAT(descriptor, this.thymio, func, this.network.getNumberOfInputNeurons(), 
-					this.network.getNumberOfOutputNeurons(), maturationperiod, useMaturation, 
+			this.instance = new ODNEAT(descriptor, this.thymio, func, this.network.getNumberOfInputNeurons(),
+					this.network.getNumberOfOutputNeurons(), maturationperiod, useMaturation,
 					evalSteps, new ArrayList<ODNEATGene>(), macroArgs,noEvalPeriod);
 
 			ODNEATPopulation pop = (ODNEATPopulation) this.instance.getPopulation();
@@ -149,7 +149,7 @@ public class ThymioOnlineEvoControllerCIBehaviour extends CIBehavior {
 	}
 
 	public void updateStructure(Object object) {
-		MacroGenome g = (object instanceof MacroGenome) ? 
+		MacroGenome g = (object instanceof MacroGenome) ?
 				((MacroGenome) object) : new MacroGenome((StandardGenome) object);
 		this.network.updateStructure(map.decode(g));
 		//create messages
@@ -231,8 +231,8 @@ public class ThymioOnlineEvoControllerCIBehaviour extends CIBehavior {
 				genomeIds[index++] = g.getId();
 			}
 		}
-		this.populationStatusMessage = new ThymioPopulationStatusMessage((controller + ""), 
-				robotId, globalStep, popSize, numSpecies, speciesSize, genomeIds, 
+		this.populationStatusMessage = new ThymioPopulationStatusMessage((controller + ""),
+				robotId, globalStep, popSize, numSpecies, speciesSize, genomeIds,
 				scores);
 
 		//TODO: log
@@ -317,7 +317,7 @@ public class ThymioOnlineEvoControllerCIBehaviour extends CIBehavior {
 					lastRight = 0.5;
 					break;
 				}
-			}	
+			}
 			robot.setMotorSpeeds(lastLeft, lastRight);
 		}
 		else {
@@ -358,12 +358,11 @@ public class ThymioOnlineEvoControllerCIBehaviour extends CIBehavior {
 		}*/
 
 		//every 10 cycles
-		if(this.logger != null && steps % freq == 0){
-			Message m = this.getControllerExecutingMessage();
-			if(m != null)
-				this.logger.logMessage(m.toString());
-		}
-		
+		// if(this.logger != null && steps % freq == 0){
+		// 	Message m = this.getControllerExecutingMessage();
+		// 	if(m != null)
+		// 		this.logger.logMessage(m.toString());
+		// }
 	}
 
 

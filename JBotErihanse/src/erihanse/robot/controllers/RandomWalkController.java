@@ -4,7 +4,7 @@ import java.util.Random;
 
 import controllers.Controller;
 import erihanse.robot.sensors.HomeRouteSensor;
-import erihanse.robot.MyDifferentialDriveRobot;
+import erihanse.robot.ODNetworkRobot;
 import simulation.Simulator;
 import simulation.robot.DifferentialDriveRobot;
 import simulation.robot.Robot;
@@ -45,7 +45,7 @@ public class RandomWalkController extends Controller {
         if (leftSpeed == 0.0 && rightSpeed == 0.0)
             ((DifferentialDriveRobot) robot).setWheelSpeed(maxSpeed, maxSpeed * Math.min(.98, 1 - multFactor));
         int sensorReading = (int) robot.getSensorByType(HomeRouteSensor.class).getSensorReading(999);
-        ((MyDifferentialDriveRobot) robot).setSourceHops(sensorReading);
+        ((ODNetworkRobot) robot).setSourceHops(sensorReading);
         // ((MyDifferentialDriveRobot) robot)
         //         .setDestinationHops((int) robot.getSensorByType(DestinationHopsSensor.class).getSensorReading(999));
     }

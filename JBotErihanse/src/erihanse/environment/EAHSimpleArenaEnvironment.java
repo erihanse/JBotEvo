@@ -5,13 +5,15 @@ import java.util.Random;
 
 import erihanse.physicalobjects.HomeNest;
 import erihanse.physicalobjects.TargetNest;
-import erihanse.robot.MyDifferentialDriveRobot;
+import erihanse.robot.ODNetworkRobot;
 import mathutils.Vector2d;
+import robot.Thymio;
 import simulation.Simulator;
 import simulation.environment.Environment;
 import simulation.physicalobjects.Nest;
 import simulation.physicalobjects.PhysicalObjectType;
 import simulation.physicalobjects.Wall;
+import simulation.robot.DifferentialDriveRobot;
 import simulation.robot.Robot;
 import simulation.util.Arguments;
 
@@ -22,7 +24,6 @@ public class EAHSimpleArenaEnvironment extends Environment {
 	 */
 	private static final long serialVersionUID = 1L;
 	protected double wallThickness = 0.1;
-	//6.28 radians = +- 2 pi
 	protected double randomizeOrientationValue = 6.28;
 	private TargetNest targetNest;
 	private HomeNest homeNest;
@@ -42,7 +43,7 @@ public class EAHSimpleArenaEnvironment extends Environment {
 		placeHomeNest(simulator);
 		placeTargetNest(simulator);
 		placeRobots(simulator);
-		robots.get(0).teleportTo(new Vector2d(-1.5,-1.5));
+		robots.get(0).teleportTo(new Vector2d(-1.5, -1.5));
 		// robots.get(1).teleportTo(new Vector2d(-1,-1));
 		// robots.get(2).teleportTo(new Vector2d(-0.5,-0.5));
 		// ((MyDifferentialDriveRobot) robots.get(0)).getHomeRoute();
@@ -111,15 +112,14 @@ public class EAHSimpleArenaEnvironment extends Environment {
 
 	@Override
 	public void update(double time) {
-		// System.out.println("time:" + time); TODO Remove
 		for (Robot r : getRobots()) {
-			MyDifferentialDriveRobot mr = (MyDifferentialDriveRobot) r;
+			ODNetworkRobot mr = (ODNetworkRobot) r;
 			mr.calculateHomeRoute();
 		}
 	}
 
 	protected Wall createWall(Simulator simulator, double x, double y, double width, double height) {
-		Wall w = new Wall(simulator,"wall",x,y,Math.PI,1,1,0,width,height,PhysicalObjectType.WALL);
+		Wall w = new Wall(simulator, "wall", x, y, Math.PI, 1, 1, 0, width, height, PhysicalObjectType.WALL);
 		this.addObject(w);
 
 		return w;
@@ -142,4 +142,23 @@ public class EAHSimpleArenaEnvironment extends Environment {
 	public double getWallThickness() {
 		return wallThickness;
 	}
+
+	public ArrayList<ODNetworkRobot> getODRobots() {
+
+		ArrayList<? extends Robot> robots = getRobots();
+
+		ArrayList<ODNetworkRobot> odrobots;
+
+		// @SuppressWarnings("unchecked")
+		odrobots = (ArrayList<ODNetworkRobot>) robots;
+
+
+
+		return odrobots;
+	}
+
+	// public ODNetworkRobot[] getRobots() {
+
+	// 	return null;
+	// }
 }

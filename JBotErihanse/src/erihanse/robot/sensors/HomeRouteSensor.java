@@ -1,7 +1,7 @@
 
 package erihanse.robot.sensors;
 
-import erihanse.robot.MyDifferentialDriveRobot;
+import erihanse.robot.ODNetworkRobot;
 import simulation.Simulator;
 import simulation.environment.Environment;
 import simulation.robot.Robot;
@@ -57,6 +57,6 @@ public class HomeRouteSensor extends NestSensor {
         //     return -1;
         // }
         // return nHops;
-        return ((MyDifferentialDriveRobot) robot).getHomeRoute().size();
+        return ((ODNetworkRobot) robot).getHomeRoute().size();
     }
 }

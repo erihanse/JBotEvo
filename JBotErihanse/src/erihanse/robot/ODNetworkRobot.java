@@ -15,7 +15,7 @@ import simulation.util.Arguments;
 import simulation.util.ArgumentsAnnotation;
 
 // TODO: Update classname
-public class MyDifferentialDriveRobot extends Thymio implements NetworkNode {
+public class ODNetworkRobot extends Thymio implements NetworkNode {
 	/**
 	 * Simulated network range of this robot.
 	 */
@@ -27,7 +27,7 @@ public class MyDifferentialDriveRobot extends Thymio implements NetworkNode {
 	private LinkedList<NetworkNode> homeRoute = new LinkedList<NetworkNode>();
 	private LinkedList<NetworkNode> targetRoute = new LinkedList<NetworkNode>();
 
-	public MyDifferentialDriveRobot(Simulator simulator, Arguments args) {
+	public ODNetworkRobot(Simulator simulator, Arguments args) {
 		super(simulator, args);
 	}
 
@@ -85,6 +85,14 @@ public class MyDifferentialDriveRobot extends Thymio implements NetworkNode {
 	}
 
 	public void calculateHomeRoute() {
+		// System.out.println("#####BEFORE#####");
+		// for (Robot r : env.getRobots()) {
+		// 	ODNetworkRobot mrr = (ODNetworkRobot) r;
+		// 	System.out.println("Robot id:" + mrr.id);
+		// 	System.out.println(mrr.getHomeRoute());
+		// }
+		// System.out.println("################");
+		homeRoute.clear();
 		LinkedList<NetworkNode> shortestRoute = new LinkedList<>();
 		EAHSimpleArenaEnvironment se = (EAHSimpleArenaEnvironment) env;
 		ArrayList<Robot> robots = env.getRobots();
@@ -99,13 +107,13 @@ public class MyDifferentialDriveRobot extends Thymio implements NetworkNode {
 		}
 
 		// If in range of home
-		if (MyMathUtils.inRange(MyDifferentialDriveRobot.this, homeNest, range)) {
+		if (inRangeOfHome()) {
 			homeRoute.clear();
 			homeRoute.add(se.getHomeNest());
 			return;
 		}
 
-		NetworkNode node;
+		NetworkNode neighbourNode;
 		// We can have several routes home
 		ArrayList<LinkedList<NetworkNode>> paths = new ArrayList<>();
 		// int shortestPathSize = Integer.MAX_VALUE;
@@ -113,16 +121,16 @@ public class MyDifferentialDriveRobot extends Thymio implements NetworkNode {
 		int shortestRouteSize = Integer.MAX_VALUE;
 
 		// Retrieve neighbouring nodes' routes
-		for (Robot robot : robotsInRange()) {
-			MyDifferentialDriveRobot mr = (MyDifferentialDriveRobot) robot;
+		for (Robot neighbourRobot : robotsInRange()) {
+			ODNetworkRobot mr = (ODNetworkRobot) neighbourRobot;
 
 			// Skip ourself
-			if (robot == this) {
+			if (neighbourRobot == this) {
 				continue;
 			}
 
-			node = (NetworkNode) robot;
-			LinkedList<NetworkNode> neighbourRoute = node.getHomeRoute();
+			neighbourNode = (NetworkNode) neighbourRobot;
+			LinkedList<NetworkNode> neighbourRoute = neighbourNode.getHomeRoute();
 
 			// If our neighbour doesn't know about a way home, skip it
 			if (neighbourRoute.isEmpty()) {
@@ -134,20 +142,39 @@ public class MyDifferentialDriveRobot extends Thymio implements NetworkNode {
 				continue;
 			}
 
-			if (neighbourRoute.contains(node)) {
+			if (neighbourRoute.contains(neighbourNode)) {
 				continue;
 			}
 
 			// We have found a valid route from a neighbour
-			potentialRoute = neighbourRoute;
-			potentialRoute.add(node);
+			potentialRoute = (LinkedList<NetworkNode>) neighbourRoute.clone();
+			potentialRoute.add(neighbourNode);
 			if (potentialRoute.size() < shortestRouteSize) {
 				shortestRoute = potentialRoute;
 				shortestRouteSize = shortestRoute.size();
 			}
 		}
 		homeRoute = shortestRoute;
+
+		if (homeRoute.contains(this)) {
+			System.out.println("yolo");
+		}
+		// System.out.println("#####AFTER######");
+		// for (Robot r : env.getRobots()) {
+		// 	ODNetworkRobot mrr = (ODNetworkRobot) r;
+		// 	System.out.println("Robot id:" + mrr.id);
+		// 	System.out.println(mrr.getHomeRoute());
+		// }
+		// System.out.println("################");
 		return;
-		// return shortestRoute;
+	}
+
+	private boolean inRangeOfHome() {
+		EAHSimpleArenaEnvironment se = (EAHSimpleArenaEnvironment) env;
+		HomeNest homeNest = se.getHomeNest();
+		if (MyMathUtils.inRange(this, homeNest, range)) {
+			return true;
+		}
+		return false;
 	}
 }

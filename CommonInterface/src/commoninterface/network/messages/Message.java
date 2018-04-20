@@ -15,7 +15,7 @@ import commoninterface.network.NetworkUtils;
 /**
  * Class to be optimized: getting the name of the interfaces an comparing them
  * as strings......
- * 
+ *
  * @author Vasco Craveiro Costa
  *
  */
@@ -97,6 +97,6 @@ public abstract class Message implements Serializable {
 	public String getSenderHostname() {
 		return senderHostname;
 	}
-	
+
 	public abstract Message getCopy();
 }

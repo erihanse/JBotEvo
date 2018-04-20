@@ -2,7 +2,7 @@ package erihanse.robot.sensors;
 
 import java.util.ArrayList;
 
-import erihanse.robot.MyDifferentialDriveRobot;
+import erihanse.robot.ODNetworkRobot;
 import simulation.Simulator;
 import simulation.environment.Environment;
 import simulation.robot.Robot;
@@ -44,7 +44,7 @@ public class DestinationHopsSensor extends Sensor {
                 ArrayList<Sensor> sensors = r.getSensors();
                 for (Sensor s : sensors) {
                     if (s instanceof DestinationHopsSensor) {
-                        double reading = ((MyDifferentialDriveRobot) r).getDestinationHops();
+                        double reading = ((ODNetworkRobot) r).getDestinationHops();
                         if (reading < nHops) {
                             nHops = (int) reading + 1;
                         }
