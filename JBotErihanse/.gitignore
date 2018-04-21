@@ -2,4 +2,5 @@
 /logs/
 /test_*
 _thymio_online_homing_wo_macro_autom/
-jallaerik/
+/output*/
+/output*.conf

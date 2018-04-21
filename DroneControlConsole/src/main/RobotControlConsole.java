@@ -64,7 +64,6 @@ public abstract class RobotControlConsole {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
-
 	}
 
 	public synchronized void disconnect() {
@@ -90,10 +89,10 @@ public abstract class RobotControlConsole {
 		}
 
 		gui.getConnectionPanel().disconnected();
-		
+
 		if(gui instanceof DroneGUI)
 			((DroneGUI) gui).getGPSPanel().clearPanelInformation();
-		
+
 		gui.getConnectionPanel().setDroneConnected(false);
 	}
 
@@ -130,7 +129,7 @@ public abstract class RobotControlConsole {
 			}
 		});
 	}
-	
+
 	public void log(String s) {
 		System.err.println("Logger not implemented!");
 	}
