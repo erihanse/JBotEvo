@@ -62,6 +62,7 @@ public abstract class Message implements Serializable {
 	}
 
 	private String getInterfaceIPAddress() {
+		if (true) return null;
 		Enumeration<NetworkInterface> nets;
 		try {
 			nets = NetworkInterface.getNetworkInterfaces();

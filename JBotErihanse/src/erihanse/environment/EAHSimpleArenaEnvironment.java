@@ -43,7 +43,7 @@ public class EAHSimpleArenaEnvironment extends Environment {
 		placeHomeNest(simulator);
 		placeTargetNest(simulator);
 		placeRobots(simulator);
-		robots.get(0).teleportTo(new Vector2d(-1.5, -1.5));
+		// robots.get(0).teleportTo(new Vector2d(-1.5, -1.5));
 		// robots.get(1).teleportTo(new Vector2d(-1,-1));
 		// robots.get(2).teleportTo(new Vector2d(-0.5,-0.5));
 		// ((MyDifferentialDriveRobot) robots.get(0)).getHomeRoute();
@@ -91,6 +91,9 @@ public class EAHSimpleArenaEnvironment extends Environment {
 			Vector2d sourcepos = homeNest.getPosition();
 			// double x = random.nextDouble() + sourcepos.x + (wallThickness / 2);
 			// double y = random.nextDouble() + sourcepos.y + (wallThickness / 2);
+
+			// TODO: experiment with fs remove this
+			sourcepos = new Vector2d(0, 0);
 
 			double x = sourcepos.x + (random.nextDouble() * maxDisperseValue + wallThickness);
 			double y = sourcepos.y + (random.nextDouble() * maxDisperseValue + wallThickness);
