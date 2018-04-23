@@ -6,6 +6,16 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Automator<JBotErihanse>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/JBotErihanse",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "erihanse.main.Automator",
+            "args": "${command:SpecifyProgramArgs}"
+        },
+        {
+            "type": "java",
             "name": "TestFitnessFunction<CommonInterface>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
@@ -380,12 +390,12 @@
         },
         {
             "type": "java",
-            "name": "ConfigMain<JBotErihanse>",
+            "name": "GuiMain<JBotErihanse>",
             "request": "launch",
             "cwd": "${workspaceFolder}/JBotErihanse",
             "console": "internalConsole",
             "stopOnEntry": false,
-            "mainClass": "erihanse.main.ConfigMain",
+            "mainClass": "erihanse.main.GuiMain",
             "projectName": "JBotErihanse",
             "args": ""
         },

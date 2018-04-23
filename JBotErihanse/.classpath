@@ -7,5 +7,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/JBotEvolver"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/JBotSim"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/EvolutionAutomator"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
