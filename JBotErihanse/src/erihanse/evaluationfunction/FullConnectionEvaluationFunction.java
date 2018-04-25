@@ -27,17 +27,26 @@ public class FullConnectionEvaluationFunction extends EvaluationFunction {
 
 	@Override
 	public void update(Simulator simulator) {
-        // TODO: Must implement route to destination first.
 		EAHSimpleArenaEnvironment sa = (EAHSimpleArenaEnvironment) simulator.getEnvironment();
-		int highestFitness = 0;
-		for (Robot r : sa.getRobots()) {
-			NetworkNode node = (NetworkNode) r;
-			int size = node.getHomeRoute().size();
 
-			if(size > highestFitness) {
-				highestFitness = size;
+		int highestHomeHops = 0;
+		int highestDestHops = 0;
+		for (Robot r : simulator.getRobots()) {
+			NetworkNode node = (NetworkNode) r;
+			int homeRouteHops = node.getHomeRoute().size();
+			int targetRouteHops = node.getTargetRoute().size();
+			highestHomeHops = Math.max(homeRouteHops, highestHomeHops);
+			highestDestHops = Math.max(targetRouteHops, highestDestHops);
+
+			if (homeRouteHops > 0 && targetRouteHops > 0) {
+				System.out.println("Full connectivity");
 			}
 		}
-		fitness = highestFitness;
+		// Durp
+		// if (highestHomeHops > 0 ^ highestDestHops > 0) {
+		// 	fitness = Math.max(highestHomeHops, highestDestHops);
+		// } else if (highestHomeHops > 0 && highestDestHops > 0) {
+		// 	fitness = Integer.MAX_VALUE;
+		// }
 	}
 }

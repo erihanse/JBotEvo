@@ -23,7 +23,7 @@ public class NEATPopulation extends Population {
 
 	protected double bestFitness;
 	protected double accumulatedFitness;
-	protected double worstFitness;
+	protected double worstFitness = Double.MAX_VALUE;
 	protected int numberOfChromosomesEvaluated;
 
 	public NEATPopulation(Arguments arguments) {
@@ -74,7 +74,7 @@ public class NEATPopulation extends Population {
 		accumulatedFitness += fitness;
 		worstFitness = Math.min(worstFitness, fitness);
 
-		if (bestFitness < fitness) {
+		if (bestFitness < fitness || bestChromosome == null) {
 			bestChromosome = chromosome;
 			bestFitness = Math.max(bestFitness, fitness);
 		}

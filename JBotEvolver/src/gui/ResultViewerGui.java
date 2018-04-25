@@ -118,7 +118,7 @@ public class ResultViewerGui extends Gui implements Updatable {
 	protected JCheckBox neuralNetworkViewerCheckbox;
 	protected JCheckBox exportToBlender;
 
-	private boolean enableDebugOptions = false;
+	protected boolean enableDebugOptions = false;
 	private boolean showSleepError = false;
 
 	protected EnvironmentKeyDispatcher dispatcher;

@@ -7,6 +7,7 @@ import erihanse.environment.EAHSimpleArenaEnvironment;
 import erihanse.mathutils.MyMathUtils;
 import erihanse.network.NetworkNode;
 import erihanse.physicalobjects.HomeNest;
+import erihanse.physicalobjects.TargetNest;
 import robot.Thymio;
 import simulation.Simulator;
 import simulation.robot.DifferentialDriveRobot;
@@ -60,10 +61,6 @@ public class ODNetworkRobot extends Thymio implements NetworkNode {
 	}
 
 	@Override
-	/**
-	 * Will force a recalculation of the home route for this robot. This will
-	 * also force a recalculation on neighbour robots' home route.
-	 */
 	public LinkedList<NetworkNode> getHomeRoute() {
 		return homeRoute;
 	}
@@ -85,26 +82,12 @@ public class ODNetworkRobot extends Thymio implements NetworkNode {
 	}
 
 	public void calculateHomeRoute() {
-		// System.out.println("#####BEFORE#####");
-		// for (Robot r : env.getRobots()) {
-		// 	ODNetworkRobot mrr = (ODNetworkRobot) r;
-		// 	System.out.println("Robot id:" + mrr.id);
-		// 	System.out.println(mrr.getHomeRoute());
-		// }
-		// System.out.println("################");
 		homeRoute.clear();
 		LinkedList<NetworkNode> shortestRoute = new LinkedList<>();
 		EAHSimpleArenaEnvironment se = (EAHSimpleArenaEnvironment) env;
 		ArrayList<Robot> robots = env.getRobots();
 
-		// Sometimes, se.homeNest is not set
 		HomeNest homeNest = se.getHomeNest();
-
-		// Avoid threading issue
-		if (homeNest == null) {
-			// System.out.println("Home nest null " + this);
-			return;
-		}
 
 		// If in range of home
 		if (inRangeOfHome()) {
@@ -142,7 +125,60 @@ public class ODNetworkRobot extends Thymio implements NetworkNode {
 				continue;
 			}
 
-			if (neighbourRoute.contains(neighbourNode)) {
+			// We have found a valid route from a neighbour
+			potentialRoute = (LinkedList<NetworkNode>) neighbourRoute.clone();
+			potentialRoute.add(neighbourNode);
+			if (potentialRoute.size() < shortestRouteSize) {
+				shortestRoute = potentialRoute;
+				shortestRouteSize = shortestRoute.size();
+			}
+		}
+		homeRoute = shortestRoute;
+
+		return;
+	}
+
+	public void calculateTargetRoute() {
+		targetRoute.clear();
+		LinkedList<NetworkNode> shortestRoute = new LinkedList<>();
+		EAHSimpleArenaEnvironment se = (EAHSimpleArenaEnvironment) env;
+		ArrayList<Robot> robots = env.getRobots();
+
+		TargetNest targetNest = se.getTargetNest();
+
+		// If in range of target
+		if (inRangeOfTarget()) {
+			targetRoute.clear();
+			targetRoute.add(se.getTargetNest());
+			return;
+		}
+
+		NetworkNode neighbourNode;
+		// We can have several routes to target
+		ArrayList<LinkedList<NetworkNode>> paths = new ArrayList<>();
+		// int shortestPathSize = Integer.MAX_VALUE;
+		LinkedList<NetworkNode> potentialRoute;
+		int shortestRouteSize = Integer.MAX_VALUE;
+
+		// Retrieve neighbouring nodes' routes
+		for (Robot neighbourRobot : robotsInRange()) {
+			ODNetworkRobot mr = (ODNetworkRobot) neighbourRobot;
+
+			// Skip ourself
+			if (neighbourRobot == this) {
+				continue;
+			}
+
+			neighbourNode = (NetworkNode) neighbourRobot;
+			LinkedList<NetworkNode> neighbourRoute = neighbourNode.getTargetRoute();
+
+			// If our neighbour doesn't know about a way to target, skip it
+			if (neighbourRoute.isEmpty()) {
+				continue;
+			}
+
+			// If we are part of the neighbour's solution, skip it
+			if (neighbourRoute.contains(this)) {
 				continue;
 			}
 
@@ -154,18 +190,8 @@ public class ODNetworkRobot extends Thymio implements NetworkNode {
 				shortestRouteSize = shortestRoute.size();
 			}
 		}
-		homeRoute = shortestRoute;
+		targetRoute = shortestRoute;
 
-		if (homeRoute.contains(this)) {
-			System.out.println("yolo");
-		}
-		// System.out.println("#####AFTER######");
-		// for (Robot r : env.getRobots()) {
-		// 	ODNetworkRobot mrr = (ODNetworkRobot) r;
-		// 	System.out.println("Robot id:" + mrr.id);
-		// 	System.out.println(mrr.getHomeRoute());
-		// }
-		// System.out.println("################");
 		return;
 	}
 
@@ -173,5 +199,11 @@ public class ODNetworkRobot extends Thymio implements NetworkNode {
 		EAHSimpleArenaEnvironment se = (EAHSimpleArenaEnvironment) env;
 		HomeNest homeNest = se.getHomeNest();
 		return MyMathUtils.inRange(this, homeNest, range);
+	}
+
+	private boolean inRangeOfTarget() {
+		EAHSimpleArenaEnvironment se = (EAHSimpleArenaEnvironment) env;
+		TargetNest targetNest = se.getTargetNest();
+		return MyMathUtils.inRange(this, targetNest, range);
 	}
 }

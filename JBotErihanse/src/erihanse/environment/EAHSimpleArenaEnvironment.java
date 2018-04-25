@@ -118,6 +118,7 @@ public class EAHSimpleArenaEnvironment extends Environment {
 		for (Robot r : getRobots()) {
 			ODNetworkRobot mr = (ODNetworkRobot) r;
 			mr.calculateHomeRoute();
+			mr.calculateTargetRoute();
 		}
 	}
 
