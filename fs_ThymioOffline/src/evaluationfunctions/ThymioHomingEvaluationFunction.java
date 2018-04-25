@@ -44,5 +44,4 @@ public class ThymioHomingEvaluationFunction extends EvaluationFunction {
 		double finalFit = fitness/(steps - noEvalPeriod);
 		return finalFit;
 	}
-
 }

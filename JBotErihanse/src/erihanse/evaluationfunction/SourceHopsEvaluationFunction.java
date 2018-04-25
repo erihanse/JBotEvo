@@ -21,17 +21,14 @@ public class SourceHopsEvaluationFunction extends EvaluationFunction {
 		fitness = 0;
 	}
 
+
 	@Override
 	public void update(Simulator simulator) {
 		EAHSimpleArenaEnvironment sa = (EAHSimpleArenaEnvironment) simulator.getEnvironment();
 		int highestFitness = 0;
 		for (Robot r : sa.getRobots()) {
 			NetworkNode node = (NetworkNode) r;
-			int size = node.getHomeRoute().size();
-
-			if(size > highestFitness) {
-				highestFitness = size;
-			}
+			highestFitness = Math.max(node.getHomeRoute().size(), highestFitness);
 		}
 		fitness = highestFitness;
 	}

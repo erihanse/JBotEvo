@@ -172,9 +172,6 @@ public class ODNetworkRobot extends Thymio implements NetworkNode {
 	private boolean inRangeOfHome() {
 		EAHSimpleArenaEnvironment se = (EAHSimpleArenaEnvironment) env;
 		HomeNest homeNest = se.getHomeNest();
-		if (MyMathUtils.inRange(this, homeNest, range)) {
-			return true;
-		}
-		return false;
+		return MyMathUtils.inRange(this, homeNest, range);
 	}
 }
