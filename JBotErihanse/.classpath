@@ -8,5 +8,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/JBotEvolver"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/JBotSim"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EvolutionAutomator"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/RaspberryController"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

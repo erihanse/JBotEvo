@@ -88,15 +88,15 @@ public class EAHSimpleArenaEnvironment extends Environment {
 					this.height - (wallThickness + r.getRadius()));
 			// r.teleportTo(randomPosition);
 
-			Vector2d sourcepos = homeNest.getPosition();
+			Vector2d distributionPoint = homeNest.getPosition();
 			// double x = random.nextDouble() + sourcepos.x + (wallThickness / 2);
 			// double y = random.nextDouble() + sourcepos.y + (wallThickness / 2);
 
-			// TODO: experiment with fs remove this
-			sourcepos = new Vector2d(0, 0);
+			//
+			// sourcepos = new Vector2d(0, 0);
 
-			double x = sourcepos.x + (random.nextDouble() * maxDisperseValue + wallThickness);
-			double y = sourcepos.y + (random.nextDouble() * maxDisperseValue + wallThickness);
+			double x = distributionPoint.x + (random.nextDouble() * maxDisperseValue + wallThickness);
+			double y = distributionPoint.y + (random.nextDouble() * maxDisperseValue + wallThickness);
 
 			r.teleportTo(new Vector2d(x, y));
 			//robots current orientation +- a given offset

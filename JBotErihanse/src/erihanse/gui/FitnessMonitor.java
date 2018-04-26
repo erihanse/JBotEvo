@@ -25,6 +25,7 @@ public class FitnessMonitor extends JFrame implements Updatable {
 
     JLabel fitnessLabel;
     Graph fitnessGraph;
+
     public FitnessMonitor(JBotEvolver jBotEvolver, EvaluationFunction evaluationFunction) {
         super();
         this.evaluationFunction = evaluationFunction;
@@ -32,29 +33,28 @@ public class FitnessMonitor extends JFrame implements Updatable {
         // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().add(fitnessLabel = new JLabel());
 
-		setLayout(new BorderLayout());
+        setLayout(new BorderLayout());
 
         fitnessGraph = new Graph(); // panel
         // fitnessGraph.setShowLast(jBotEvolver.getArguments("));
         int simulationSteps = jBotEvolver.getArguments().get("--environment").getArgumentAsInt("steps");
         fitnessGraph.setShowLast(simulationSteps);
-		fitnessGraph.setxLabel("Steps");
+        fitnessGraph.setxLabel("Steps");
         fitnessGraph.setyLabel("Fitness");
 
-
-		JPanel graphPanel = new JPanel(new BorderLayout());
-		graphPanel.setBorder(BorderFactory.createTitledBorder("Fitness Graph"));
+        JPanel graphPanel = new JPanel(new BorderLayout());
+        graphPanel.setBorder(BorderFactory.createTitledBorder("Fitness Graph"));
         graphPanel.add(fitnessGraph, BorderLayout.CENTER);
         add(graphPanel);
 
-		setSize(880, 320);
+        setSize(880, 320);
         setVisible(true);
     }
 
-	@Override
-	public void update(Simulator simulator) {
+    @Override
+    public void update(Simulator simulator) {
         fitnessLabel.setText(String.valueOf(simulator.getTime()));
         fitnessGraph.addData(evaluationFunction.getFitness());
 
-	}
+    }
 }

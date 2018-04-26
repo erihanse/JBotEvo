@@ -3,6 +3,7 @@ package erihanse.robot;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import erihanse.commoninterface.WLANNetworkCI;
 import erihanse.environment.EAHSimpleArenaEnvironment;
 import erihanse.mathutils.MyMathUtils;
 import erihanse.network.NetworkNode;
@@ -16,7 +17,7 @@ import simulation.util.Arguments;
 import simulation.util.ArgumentsAnnotation;
 
 // TODO: Update classname
-public class ODNetworkRobot extends Thymio implements NetworkNode {
+public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI {
 	/**
 	 * Simulated network range of this robot.
 	 */
@@ -27,9 +28,12 @@ public class ODNetworkRobot extends Thymio implements NetworkNode {
 
 	private LinkedList<NetworkNode> homeRoute = new LinkedList<NetworkNode>();
 	private LinkedList<NetworkNode> targetRoute = new LinkedList<NetworkNode>();
+	
+	protected Simulator simulator;
 
 	public ODNetworkRobot(Simulator simulator, Arguments args) {
 		super(simulator, args);
+		this.simulator = simulator;
 	}
 
 	/**
@@ -205,5 +209,22 @@ public class ODNetworkRobot extends Thymio implements NetworkNode {
 		EAHSimpleArenaEnvironment se = (EAHSimpleArenaEnvironment) env;
 		TargetNest targetNest = se.getTargetNest();
 		return MyMathUtils.inRange(this, targetNest, range);
+	}
+
+	@Override
+	public int getNumberOfNeighbours() {
+		ArrayList<String> jalla = new ArrayList<>();
+		jalla.add("C");
+		jalla.add("B");
+		jalla.add("A");
+		jalla.sort(null);
+		System.out.println(jalla);
+		return 0;
+	}
+
+	@Override
+	public double[] getNeighboursSignalStrength() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
