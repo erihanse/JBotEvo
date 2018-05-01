@@ -6,32 +6,37 @@ import commoninterface.CISensor;
 import commoninterface.RobotCI;
 import commoninterface.ThymioCI;
 import commoninterface.utils.CIArguments;
+import erihanse.commoninterface.WLANNetworkCI;
 
 public class WLANScanCISensor extends CISensor {
-	private ThymioCI thymio;
 	private List<Long> readings;
 	private int nRobots;
+	protected WLANNetworkCI networkRobot;
 
 	public WLANScanCISensor(int id, RobotCI robot, CIArguments args) {
 		super(id, robot, args);
+		networkRobot = (WLANNetworkCI) robot;
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public int getNumberOfSensors() {
-		return nRobots;
+		return 5;
 	}
 
 	@Override
+	/**
+	 * readings[0]: n neighbours
+	 * readings[1-4]: signal strength of 4 nearest neighbours
+	 */
 	public double getSensorReading(int sensorNumber) {
 		// TODO Auto-generated method stub
-		return 0;
+		return readings.get(sensorNumber);
 	}
 
 	@Override
 	public void update(double time, Object[] entities) {
 		// readings = thymio.
-
 	}
 
 }

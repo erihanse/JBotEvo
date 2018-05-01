@@ -11,7 +11,7 @@ public class ThymioIRCISensor extends CISensor {
 
 	private ThymioCI thymio;
 	private List<Short> readings;
-	
+
 	public ThymioIRCISensor(int id, RobotCI robot, CIArguments args) {
 		super(id, robot, args);
 		thymio = (ThymioCI)robot;

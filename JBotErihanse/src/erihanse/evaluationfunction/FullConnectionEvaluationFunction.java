@@ -42,6 +42,8 @@ public class FullConnectionEvaluationFunction extends EvaluationFunction {
 				System.out.println("Full connectivity");
 			}
 		}
+		// TODO: Set fitness to something meaningful
+		fitness = highestHomeHops;
 		// Durp
 		// if (highestHomeHops > 0 ^ highestDestHops > 0) {
 		// 	fitness = Math.max(highestHomeHops, highestDestHops);

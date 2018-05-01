@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import network.SimulatedBroadcastHandler;
+// import network.SimulatedBroadcastHandler;
 
 import sensors.ThymioCameraSensor;
 import sensors.ThymioIRSensor;

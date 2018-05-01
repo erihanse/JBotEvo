@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import network.SimulatedBroadcastMessageSender;
 
 import simulation.Network;
-import simulation.robot.AquaticDrone;
+// import simulation.robot.AquaticDrone;
 import commoninterface.RobotCI;
 import commoninterface.entities.Entity;
 import commoninterface.entities.RobotLocation;
@@ -22,43 +22,43 @@ public class SimulatedThymioBroadcastHandler extends BroadcastHandler {
 		super(drone, broadcastMessages);
 		sender = new SimulatedBroadcastMessageSender(this, this.broadcastMessages);
 	}
-	
+
 	@Override
 	public void messageReceived(String address, String message) {
 
 		if(address.equals(robot.getNetworkAddress()))
 			return;
-		
+
 		if(message.startsWith(PositionBroadcastMessage.IDENTIFIER)) {
-				
+
 			RobotLocation dl = PositionBroadcastMessage.decode(message);
-			
+
 			if(robot.getNetworkAddress().equals(dl.getName()))
 				return;
-			
-			if(robot instanceof AquaticDrone) {
-				AquaticDrone drone = (AquaticDrone)robot;
-				if(drone.getGPSLatLon() == null || dl.getLatLon() == null)
-					return;
-				if(CoordinateUtilities.distanceInMeters(drone.getGPSLatLon(),dl.getLatLon()) > drone.getCommRange())
-					robot.getEntities().remove(dl);
-				else {
-					replaceEntity(dl);
-					if(DEBUG)
-						System.out.println("Added DroneLocation "+dl);
-				}
-					
-			} else {
+
+			// if(robot instanceof AquaticDrone) {
+			// 	AquaticDrone drone = (AquaticDrone)robot;
+			// 	if(drone.getGPSLatLon() == null || dl.getLatLon() == null)
+			// 		return;
+			// 	if(CoordinateUtilities.distanceInMeters(drone.getGPSLatLon(),dl.getLatLon()) > drone.getCommRange())
+			// 		robot.getEntities().remove(dl);
+			// 	else {
+			// 		replaceEntity(dl);
+			// 		if(DEBUG)
+			// 			System.out.println("Added DroneLocation "+dl);
+			// 	}
+
+			// } else {
 				replaceEntity(dl);
 				if(DEBUG)
 					System.out.println("Added DroneLocation "+dl);
-			}
-				
+			// }
+
 		} else {
 			super.messageReceived(address, message);
 		}
 	}
-	
+
 	private void replaceEntity(Entity e) {
 		e.setTimestepReceived((long)(robot.getTimeSinceStart()*10));
 		robot.replaceEntity(e);
@@ -77,6 +77,6 @@ public class SimulatedThymioBroadcastHandler extends BroadcastHandler {
 		super.update(timestep);
 		sender.update(timestep);
 	}
-	
+
 
 }

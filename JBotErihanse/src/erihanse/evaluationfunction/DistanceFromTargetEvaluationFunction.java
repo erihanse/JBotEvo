@@ -11,8 +11,6 @@ import simulation.util.Arguments;
 
 /**
  * DistanceFromTargetEvaluationFunction
- */
-/**
  * The evaluation is set by the distance between the target and the closest robot.
  */
 public class DistanceFromTargetEvaluationFunction extends EvaluationFunction {

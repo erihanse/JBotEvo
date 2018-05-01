@@ -36,10 +36,10 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/Pi4J_IT_Version/lib/pi4j-service-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/Pi4J_Libraries"/>
 	<classpathentry kind="lib" path="/CommonInterface/lib/joda-time-2.4.jar"/>
 	<classpathentry kind="lib" path="/CommonInterface/lib/opencv-2412.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Behaviors"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/CommonInterface"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Pi4J_Libraries"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
