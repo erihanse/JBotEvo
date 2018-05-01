@@ -8,6 +8,7 @@ import commoninterface.evolution.odneat.eval.CIOnlineCenterAggregationEvaluation
 import commoninterface.evolution.odneat.eval.CIOnlineHomingEvaluationFunction;
 import commoninterface.evolution.odneat.eval.CIOnlineNavigationEvaluationFunction;
 import commoninterface.utils.CIArguments;
+import erihanse.commoninterface.evaluationfunctions.CIConnectivityEvaluationFunction;
 import erihanse.commoninterface.evaluationfunctions.CISourceHopsEvaluationFunction;
 import erihanse.evaluationfunction.SourceHopsEvaluationFunction;
 
@@ -30,10 +31,8 @@ public class SimulatedODNetworkCIBehaviour extends SimulatedThymioOnlineEvoContr
             return new CIOnlineAggregationEvaluationFunction(ciArguments);
         else if (ciArguments.getArgumentAsString("taskname").equalsIgnoreCase("centeraggregation"))
             return new CIOnlineCenterAggregationEvaluationFunction(ciArguments);
-        // else if (ciArguments.getArgumentAsString("taskname").equalsIgnoreCase("AdHocNetwork"))
-        //     return new CIOnlineAdHocNetworkEvaluationFunction(ciArguments);
-        else if (ciArguments.getArgumentAsString("taskname").equalsIgnoreCase("sourcehops"))
-            return new CISourceHopsEvaluationFunction(ciArguments);
+        else if (ciArguments.getArgumentAsString("taskname").equalsIgnoreCase("connectivity"))
+            return new CIConnectivityEvaluationFunction(ciArguments);
         return null;
     }
 }

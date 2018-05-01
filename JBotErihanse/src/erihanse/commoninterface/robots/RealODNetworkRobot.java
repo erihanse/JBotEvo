@@ -1,12 +1,12 @@
 package erihanse.commoninterface.robots;
 
 import commoninterfaceimpl.RealThymioCI;
-import erihanse.commoninterface.WLANNetworkCI;
+import erihanse.commoninterface.WLANNetworkCIRobot;
 
-public class RealODNetworkRobot extends RealThymioCI implements WLANNetworkCI {
+public class RealODNetworkRobot extends RealThymioCI implements WLANNetworkCIRobot {
 
 	public RealODNetworkRobot() {
-		
+
 	}
 
 	@Override

@@ -3,7 +3,7 @@ package erihanse.robot;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import erihanse.commoninterface.WLANNetworkCI;
+import erihanse.commoninterface.WLANNetworkCIRobot;
 import erihanse.environment.EAHSimpleArenaEnvironment;
 import erihanse.mathutils.MyMathUtils;
 import erihanse.network.NetworkNode;
@@ -11,13 +11,12 @@ import erihanse.physicalobjects.HomeNest;
 import erihanse.physicalobjects.TargetNest;
 import robot.Thymio;
 import simulation.Simulator;
-import simulation.robot.DifferentialDriveRobot;
 import simulation.robot.Robot;
 import simulation.util.Arguments;
 import simulation.util.ArgumentsAnnotation;
 
 // TODO: Update classname
-public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI {
+public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCIRobot {
 	/**
 	 * Simulated network range of this robot.
 	 */
@@ -28,7 +27,7 @@ public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI
 
 	private LinkedList<NetworkNode> homeRoute = new LinkedList<NetworkNode>();
 	private LinkedList<NetworkNode> targetRoute = new LinkedList<NetworkNode>();
-	
+
 	protected Simulator simulator;
 
 	public ODNetworkRobot(Simulator simulator, Arguments args) {

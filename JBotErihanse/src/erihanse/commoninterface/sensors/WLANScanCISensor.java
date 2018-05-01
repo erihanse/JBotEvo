@@ -6,16 +6,16 @@ import commoninterface.CISensor;
 import commoninterface.RobotCI;
 import commoninterface.ThymioCI;
 import commoninterface.utils.CIArguments;
-import erihanse.commoninterface.WLANNetworkCI;
+import erihanse.commoninterface.WLANNetworkCIRobot;
 
 public class WLANScanCISensor extends CISensor {
 	private List<Long> readings;
 	private int nRobots;
-	protected WLANNetworkCI networkRobot;
+	protected WLANNetworkCIRobot networkRobot;
 
 	public WLANScanCISensor(int id, RobotCI robot, CIArguments args) {
 		super(id, robot, args);
-		networkRobot = (WLANNetworkCI) robot;
+		networkRobot = (WLANNetworkCIRobot) robot;
 		// TODO Auto-generated constructor stub
 	}
 
