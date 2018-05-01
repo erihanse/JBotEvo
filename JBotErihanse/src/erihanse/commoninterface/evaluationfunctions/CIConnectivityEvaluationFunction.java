@@ -1,12 +1,13 @@
-package commoninterface.evolution.odneat.eval;
-
+package erihanse.commoninterface.evaluationfunctions;
 
 import commoninterface.RobotCI;
+import commoninterface.evolution.odneat.eval.CIODNEATEvaluationFunction;
 import commoninterface.utils.CIArguments;
+import erihanse.robot.ODNetworkRobot;
 
-public class CIOnlineHomingEvaluationFunction extends CIODNEATEvaluationFunction {
+public class CIConnectivityEvaluationFunction extends CIODNEATEvaluationFunction {
 
-	public CIOnlineHomingEvaluationFunction(CIArguments args) {
+	public CIConnectivityEvaluationFunction(CIArguments args) {
 		super(args);
 	}
 
@@ -18,6 +19,8 @@ public class CIOnlineHomingEvaluationFunction extends CIODNEATEvaluationFunction
 	@Override
 	//needs: inputs in [0,1], outputs in [0,1]
 	public double updateEnergyLevel(double currentEnergy, RobotCI robot, double[] inputs, double[] outputs) {
+		ODNetworkRobot odrobot = (ODNetworkRobot) robot;
+		int id = odrobot.getId();
 
 		/**
 		 * assuming that
@@ -37,6 +40,7 @@ public class CIOnlineHomingEvaluationFunction extends CIODNEATEvaluationFunction
 		//to prevent potential rounding errors
 		boolean inNest = Math.abs(inputs[inputs.length - 2] - 1.0) < 0.00000001;
 		double nestReading = inputs[inputs.length - 1];
+
 		if(inNest)
 			return 1.0;
 		else {
