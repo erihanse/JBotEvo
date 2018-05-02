@@ -1,5 +1,7 @@
 package erihanse.mathutils;
 
+import java.awt.geom.Point2D;
+
 import simulation.physicalobjects.PhysicalObject;
 
 /**

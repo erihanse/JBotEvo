@@ -3,6 +3,7 @@ package erihanse.robot;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import commoninterface.neat.utils.MathUtils;
 import erihanse.commoninterface.WLANNetworkCIRobot;
 import erihanse.environment.EAHSimpleArenaEnvironment;
 import erihanse.mathutils.MyMathUtils;
@@ -73,11 +74,11 @@ public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI
 		return targetRoute;
 	}
 
-	public ArrayList<Robot> robotsInRange() {
-		ArrayList<Robot> inRangeRobots = new ArrayList<>();
+	public ArrayList<ODNetworkRobot> robotsInRange() {
+		ArrayList<ODNetworkRobot> inRangeRobots = new ArrayList<>();
 		for (Robot r : env.getRobots()) {
 			if (MyMathUtils.inRange(this, r, range)) {
-				inRangeRobots.add(r);
+				inRangeRobots.add((ODNetworkRobot) r);
 			}
 		}
 		inRangeRobots.remove(this);
@@ -212,18 +213,17 @@ public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI
 
 	@Override
 	public int getNumberOfNeighbours() {
-		ArrayList<String> jalla = new ArrayList<>();
-		jalla.add("C");
-		jalla.add("B");
-		jalla.add("A");
-		jalla.sort(null);
-		System.out.println(jalla);
-		return 0;
+		return robotsInRange().size();
 	}
 
 	@Override
 	public double[] getNeighboursSignalStrength() {
-		// TODO Auto-generated method stub
-		return null;
+		return robotsInRange().stream()
+			.mapToDouble(n -> this.getPosition().distanceTo(n.getPosition()))
+			.toArray();
+	}
+
+	public int getId() {
+		return getRobotId();
 	}
 }
