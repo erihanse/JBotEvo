@@ -8,7 +8,7 @@ class GuiMain {
         // new CombinedGui(new String[]{"--gui","classname=ResultViewerGui,renderer=(classname=TraceRenderer))"});
         new CombinedGui(
                 // new String[] { "--gui", "classname=ResultViewerGui,enabledebugoptions=1,renderer=(classname=AdHocNetworkRenderer))" });
-                // new String[] { "--gui", "classname=AdHocResultViewerGui,enabledebugoptions=1,renderer=(classname=AdHocNetworkRenderer))" });
-                new String[] { "--gui", "classname=CIResultViewerGui,enabledebugoptions=1,renderer=(classname=AdHocNetworkRenderer))" });
+                new String[] { "--gui", "classname=AdHocResultViewerGui,enabledebugoptions=1,renderer=(classname=AdHocNetworkRenderer))" });
+                // new String[] { "--gui", "classname=CIResultViewerGui,enabledebugoptions=1,renderer=(classname=AdHocNetworkRenderer))" });
     }
 }

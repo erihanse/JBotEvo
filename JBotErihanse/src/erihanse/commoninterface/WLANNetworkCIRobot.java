@@ -1,5 +1,7 @@
 package erihanse.commoninterface;
 
+import java.util.ArrayList;
+
 import erihanse.commoninterface.WLANNetworkCIRobot;
 
 /**

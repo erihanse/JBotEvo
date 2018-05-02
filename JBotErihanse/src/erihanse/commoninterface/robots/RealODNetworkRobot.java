@@ -1,5 +1,7 @@
 package erihanse.commoninterface.robots;
 
+import java.util.ArrayList;
+
 import commoninterfaceimpl.RealThymioCI;
 import erihanse.commoninterface.WLANNetworkCIRobot;
 

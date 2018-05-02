@@ -1,6 +1,7 @@
 package erihanse.commoninterface.sensors;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -34,19 +35,20 @@ public class WLANScanCISensor extends CISensor {
 	 * readings[1-4]: signal strength of 4 nearest neighbours
 	 */
 	public double getSensorReading(int sensorNumber) {
-		// TODO Auto-generated method stub
 		return readings[sensorNumber];
 	}
 
 	@Override
 	public void update(double time, Object[] entities) {
+		// Zero out readings
+		readings = new double[getNumberOfSensors()];
 		// readings[0]: nNeighbours
 		readings[0] = (long) networkRobot.getNumberOfNeighbours();
 		// readings[1-4]: signal strength of neighbours.
 		// In this case, the distance between the two robots
 		double[] neighbourSignalStrengths = networkRobot.getNeighboursSignalStrength();
-		for (int i = 1; i < getNumberOfSensors(); i++) {
-			readings[i] = neighbourSignalStrengths[i];
+		for (int i = 1; i < getNumberOfSensors() && i < neighbourSignalStrengths.length - 1; i++) {
+			readings[i] = neighbourSignalStrengths[i-1];
 		}
 	}
 }
