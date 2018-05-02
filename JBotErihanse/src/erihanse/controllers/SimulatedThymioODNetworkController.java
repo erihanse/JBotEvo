@@ -1,7 +1,6 @@
 package erihanse.controllers;
 
 import commoninterface.ThymioCI;
-import commoninterface.evolution.SimulatedThymioOnlineEvoControllerCIBehaviour;
 import commoninterface.utils.CIArguments;
 import controllers.Controller;
 import erihanse.commoninterface.evolution.SimulatedODNetworkCIBehaviour;
