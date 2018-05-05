@@ -7,13 +7,11 @@ import erihanse.physicalobjects.HomeNest;
 import erihanse.physicalobjects.TargetNest;
 import erihanse.robot.ODNetworkRobot;
 import mathutils.Vector2d;
-import robot.Thymio;
 import simulation.Simulator;
 import simulation.environment.Environment;
 import simulation.physicalobjects.Nest;
 import simulation.physicalobjects.PhysicalObjectType;
 import simulation.physicalobjects.Wall;
-import simulation.robot.DifferentialDriveRobot;
 import simulation.robot.Robot;
 import simulation.util.Arguments;
 
@@ -84,8 +82,8 @@ public class EAHSimpleArenaEnvironment extends Environment {
 		double maxDisperseValue = (homeNest.getRadius() - wallThickness) / Math.sqrt(2);
 		for (int i = 0; i < robots.size(); i++) {
 			Robot r = robots.get(i);
-			Vector2d randomPosition = generateRandomPosition(simulator, this.width - (wallThickness + r.getRadius()),
-					this.height - (wallThickness + r.getRadius()));
+			// Vector2d randomPosition = generateRandomPosition(simulator, this.width - (wallThickness + r.getRadius()),
+			// 		this.height - (wallThickness + r.getRadius()));
 			// r.teleportTo(randomPosition);
 
 			Vector2d distributionPoint = homeNest.getPosition();
@@ -95,8 +93,8 @@ public class EAHSimpleArenaEnvironment extends Environment {
 			//
 			// sourcepos = new Vector2d(0, 0);
 
-			double x = distributionPoint.x + (random.nextDouble() * maxDisperseValue + wallThickness);
-			double y = distributionPoint.y + (random.nextDouble() * maxDisperseValue + wallThickness);
+			double x = distributionPoint.x + (random.nextDouble() * maxDisperseValue + wallThickness + 0.5);
+			double y = distributionPoint.y + (random.nextDouble() * maxDisperseValue + wallThickness + 0.5);
 
 			r.teleportTo(new Vector2d(x, y));
 			//robots current orientation +- a given offset

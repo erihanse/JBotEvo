@@ -16,7 +16,6 @@ import simulation.robot.Robot;
 import simulation.util.Arguments;
 import simulation.util.ArgumentsAnnotation;
 
-// TODO: Update classname
 public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCIRobot {
 	/**
 	 * Simulated network range of this robot.

@@ -16,8 +16,10 @@ public class RandomWalkController extends Controller {
     private double leftSpeed;
     private double rightSpeed;
 
+
     // TODO: cheating
     Simulator simulator;
+    HomeRouteSensor homeSensor;
 
     public RandomWalkController(Simulator simulator, Robot robot, Arguments args) {
         super(simulator, robot, args);
@@ -26,13 +28,11 @@ public class RandomWalkController extends Controller {
             maxSpeed = actuators.getArgumentAsDoubleOrSetDefault("maxspeed", 0.1);
         }
         this.simulator = simulator;
+        homeSensor = (HomeRouteSensor) robot.getSensorByType(HomeRouteSensor.class);
     }
 
     @Override
     public void controlStep(double time) {
-        if (time == 450) {
-            System.out.println();
-        }
         double multFactor = 10;
         if (time % 100 == 0) {
             Random random = simulator.getRandom();

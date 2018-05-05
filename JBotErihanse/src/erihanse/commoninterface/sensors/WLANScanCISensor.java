@@ -12,6 +12,7 @@ import commoninterface.utils.CIArguments;
 import erihanse.commoninterface.WLANNetworkCIRobot;
 
 public class WLANScanCISensor extends CISensor {
+	final private int numberOfNeighboursToCompare = 5;
 	private double[] readings;
 
 	protected WLANNetworkCIRobot networkRobot;
@@ -25,7 +26,7 @@ public class WLANScanCISensor extends CISensor {
 
 	@Override
 	public int getNumberOfSensors() {
-		return 5;
+		return numberOfNeighboursToCompare;
 	}
 
 	@Override
