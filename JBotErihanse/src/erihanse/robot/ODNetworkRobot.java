@@ -12,6 +12,7 @@ import erihanse.physicalobjects.HomeNest;
 import erihanse.physicalobjects.TargetNest;
 import robot.Thymio;
 import simulation.Simulator;
+import simulation.physicalobjects.PhysicalObject;
 import simulation.robot.Robot;
 import simulation.util.Arguments;
 import simulation.util.ArgumentsAnnotation;
@@ -152,12 +153,12 @@ public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI
 		EAHSimpleArenaEnvironment se = (EAHSimpleArenaEnvironment) env;
 		ArrayList<Robot> robots = env.getRobots();
 
-		TargetNest targetNest = se.getTargetNest();
+		TargetNest targetNest = se.getSinkNest();
 
 		// If in range of target
 		if (inRangeOfTarget()) {
 			targetRoute.clear();
-			targetRoute.add(se.getTargetNest());
+			targetRoute.add(se.getSinkNest());
 			return;
 		}
 
@@ -211,7 +212,7 @@ public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI
 
 	private boolean inRangeOfTarget() {
 		EAHSimpleArenaEnvironment se = (EAHSimpleArenaEnvironment) env;
-		TargetNest targetNest = se.getTargetNest();
+		TargetNest targetNest = se.getSinkNest();
 		return MyMathUtils.inRange(this, targetNest, range);
 	}
 
@@ -230,9 +231,5 @@ public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI
 	@Override
 	public int getId() {
 		return getRobotId();
-	}
-
-	public LinkedList<NetworkNode> getLongestRoute() {
-		return eahenv.getLongestRouteFromHome();
 	}
 }

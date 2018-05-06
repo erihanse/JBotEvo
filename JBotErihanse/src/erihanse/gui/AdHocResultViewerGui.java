@@ -24,6 +24,7 @@ import erihanse.network.NetworkNode;
 import gui.ResultViewerGui;
 import simulation.JBotSim;
 import simulation.Simulator;
+import simulation.physicalobjects.PhysicalObject;
 import simulation.robot.Robot;
 import simulation.util.Arguments;
 import updatables.BlenderExport;
@@ -193,7 +194,7 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 		super.update(simulator);
 		EAHSimpleArenaEnvironment eahenv = (EAHSimpleArenaEnvironment) simulator.getEnvironment();
 
-		LinkedList<NetworkNode> longestHomeRoute = eahenv.getLongestRouteFromHome();
+		LinkedList<? extends NetworkNode> longestHomeRoute = eahenv.getLongestRouteFromHome();
 		LinkedList<NetworkNode> longestSinkRoute = eahenv.getLongestRouteFromSink();
 		homeHopsTextField.setText(String.valueOf(longestHomeRoute.size()));
 		SinkHopsTextField.setText(String.valueOf(longestSinkRoute.size()));
@@ -211,7 +212,6 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 			.collect(Collectors.joining("->"));
 		this.longestSinkRoute.setText(longestSinkRouteText);
 		this.longestSinkRoute.setToolTipText(longestSinkRouteText);
-
 	}
 
 	@Override

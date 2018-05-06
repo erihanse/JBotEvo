@@ -1,18 +1,21 @@
 
 package erihanse.evaluationfunction;
 
+import java.util.Comparator;
 import java.util.stream.Stream;
 
+import commoninterface.mathutils.Vector2d;
 import erihanse.environment.EAHSimpleArenaEnvironment;
 import erihanse.network.NetworkNode;
+import erihanse.robot.ODNetworkRobot;
 import evolutionaryrobotics.evaluationfunctions.EvaluationFunction;
 import simulation.Simulator;
+import simulation.physicalobjects.PhysicalObject;
 import simulation.robot.Robot;
 import simulation.util.Arguments;
 
 /**
- * Class MyEvaluationfunction
- * 	Global
+ * Class MyEvaluationfunction Global
  */
 public class FullConnectionEvaluationFunction extends EvaluationFunction {
 	private double srcFactor = 0.1;
@@ -24,22 +27,37 @@ public class FullConnectionEvaluationFunction extends EvaluationFunction {
 		fitness = 0;
 	}
 
-
 	@Override
 	public void update(Simulator simulator) {
-		EAHSimpleArenaEnvironment sa = (EAHSimpleArenaEnvironment) simulator.getEnvironment();
+		EAHSimpleArenaEnvironment eahenv = (EAHSimpleArenaEnvironment) simulator.getEnvironment();
 
-		int highestHomeHops = 0;
-		int highestDestHops = 0;
+		ODNetworkRobot closestRobot = getClosestRobotFromSink(simulator, eahenv);
+		// fitness =
+		// eahenv.getTargetNest().getPosition().distanceTo(closestRobot.getPosition());
+
+	}
+
+	private ODNetworkRobot getClosestRobotFromSink(Simulator simulator, EAHSimpleArenaEnvironment eahenv) {
 		for (Robot r : simulator.getRobots()) {
 			NetworkNode node = (NetworkNode) r;
-			int homeRouteHops = node.getHomeRoute().size();
-			int targetRouteHops = node.getSinkRoute().size();
-			highestHomeHops = Math.max(homeRouteHops, highestHomeHops);
-			highestDestHops = Math.max(targetRouteHops, highestDestHops);
-
+			if (node.getHomeRoute().size() > 0 && node.getSinkRoute().size() > 0) {
+				System.out.println("Full connectivity");
+				simulator.stopSimulation();
+			}
 		}
-		// TODO: Set fitness to something meaningful
-		fitness = highestHomeHops;
+
+		ODNetworkRobot closestNetworkRobot = (ODNetworkRobot) eahenv.getLongestRouteFromHome()
+			.stream()
+			.min(new Comparator<NetworkNode>() {
+				@Override
+				public int compare(NetworkNode o1, NetworkNode o2) {
+					return ((PhysicalObject) o1).getPosition()
+						.distanceTo(eahenv.getSinkNest().getPosition()) < ((PhysicalObject) o2).getPosition()
+							.distanceTo(eahenv.getSinkNest().getPosition()) ? -1 : 1;
+				}
+			})
+			.get();
+		fitness = (closestNetworkRobot.getPosition().distanceTo(eahenv.getSinkNest().getPosition()));
+		return closestNetworkRobot;
 	}
 }

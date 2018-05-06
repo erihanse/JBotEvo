@@ -8,6 +8,8 @@ import java.awt.Polygon;
 import java.awt.event.MouseEvent;
 
 import erihanse.environment.EAHSimpleArenaEnvironment;
+import erihanse.network.NetworkNode;
+import erihanse.robot.ODNetworkRobot;
 import gui.renderer.TwoDRendererDebug;
 import mathutils.Point2d;
 import mathutils.Vector2d;
@@ -33,98 +35,139 @@ public class AdHocNetworkRenderer extends TwoDRendererDebug {
 
     @Override
     protected void drawRobot(Graphics graphics, Robot robot) {
-		if (image.getWidth() != getWidth() || image.getHeight() != getHeight())
-			createImage();
+        if (image.getWidth() != getWidth() || image.getHeight() != getHeight())
+            createImage();
 
-		int circleDiameter = bigRobots ? (int) Math.max(10, Math.round(robot.getDiameter() * scale))
-				: (int) Math.round(robot.getDiameter() * scale);
-		int x = transformX(robot.getPosition().getX()) - circleDiameter / 2;
-		int y = transformY(robot.getPosition().getY()) - circleDiameter / 2;
+        int circleDiameter = bigRobots ? (int) Math.max(10, Math.round(robot.getDiameter() * scale))
+                : (int) Math.round(robot.getDiameter() * scale);
+        int x = transformX(robot.getPosition().getX()) - circleDiameter / 2;
+        int y = transformY(robot.getPosition().getY()) - circleDiameter / 2;
 
-		//		if(robot.getId() == selectedRobot) {
-		//			graphics.setColor(Color.yellow);
-		//			graphics.fillOval(x-2, y-2, circleDiameter + 4, circleDiameter + 4);
-		//
-		//		}
-		graphics.setColor(robot.getBodyColor());
-		graphics.fillOval(x, y, circleDiameter, circleDiameter);
+        // if(robot.getId() == selectedRobot) {
+        // graphics.setColor(Color.yellow);
+        // graphics.fillOval(x-2, y-2, circleDiameter + 4, circleDiameter + 4);
+        //
+        // }
+        graphics.setColor(robot.getBodyColor());
+        graphics.fillOval(x, y, circleDiameter, circleDiameter);
 
-		int avgColor = (robot.getBodyColor().getRed() + robot.getBodyColor().getGreen()
-				+ robot.getBodyColor().getBlue()) / 3;
+        int avgColor = (robot.getBodyColor().getRed() + robot.getBodyColor().getGreen()
+                + robot.getBodyColor().getBlue()) / 3;
 
-		if (avgColor > 255 / 2) {
-			graphics.setColor(Color.BLACK);
-		} else {
-			graphics.setColor(Color.WHITE);
-		}
+        if (avgColor > 255 / 2) {
+            graphics.setColor(Color.BLACK);
+        } else {
+            graphics.setColor(Color.WHITE);
+        }
 
-		double orientation = robot.getOrientation();
-		Vector2d p0 = new Vector2d();
-		Vector2d p1 = new Vector2d();
-		Vector2d p2 = new Vector2d();
-		p0.set(0, -robot.getRadius() / 3);
-		p1.set(0, robot.getRadius() / 3);
-		p2.set(6 * robot.getRadius() / 7, 0);
+        double orientation = robot.getOrientation();
+        Vector2d p0 = new Vector2d();
+        Vector2d p1 = new Vector2d();
+        Vector2d p2 = new Vector2d();
+        p0.set(0, -robot.getRadius() / 3);
+        p1.set(0, robot.getRadius() / 3);
+        p2.set(6 * robot.getRadius() / 7, 0);
 
-		p0.rotate(orientation);
-		p1.rotate(orientation);
-		p2.rotate(orientation);
+        p0.rotate(orientation);
+        p1.rotate(orientation);
+        p2.rotate(orientation);
 
-		int[] xp = new int[3];
-		int[] yp = new int[3];
+        int[] xp = new int[3];
+        int[] yp = new int[3];
 
-		xp[0] = transformX(p0.getX() + robot.getPosition().getX());
-		yp[0] = transformY(p0.getY() + robot.getPosition().getY());
+        xp[0] = transformX(p0.getX() + robot.getPosition().getX());
+        yp[0] = transformY(p0.getY() + robot.getPosition().getY());
 
-		xp[1] = transformX(p1.getX() + robot.getPosition().getX());
-		yp[1] = transformY(p1.getY() + robot.getPosition().getY());
+        xp[1] = transformX(p1.getX() + robot.getPosition().getX());
+        yp[1] = transformY(p1.getY() + robot.getPosition().getY());
 
-		xp[2] = transformX(p2.getX() + robot.getPosition().getX());
-		yp[2] = transformY(p2.getY() + robot.getPosition().getY());
+        xp[2] = transformX(p2.getX() + robot.getPosition().getX());
+        yp[2] = transformY(p2.getY() + robot.getPosition().getY());
 
-		graphics.fillPolygon(xp, yp, 3);
+        graphics.fillPolygon(xp, yp, 3);
 
-		graphics.setColor(Color.BLACK);
+        graphics.setColor(Color.BLACK);
 
-		//		System.out.println("Robot ID: "+robot.getId());
-		//		System.out.println("\n Actuators:");
-		//		for(Actuator act:robot.getActuators()){
-		//			System.out.println(act);
-		//		}
-		//		System.out.println("\n Sensors:");
-		//		for(Sensor sensor:robot.getSensors()){
-		//			System.out.println(sensor);
-		//		}
-		//		System.out.println("\n\n");
+        // System.out.println("Robot ID: "+robot.getId());
+        // System.out.println("\n Actuators:");
+        // for(Actuator act:robot.getActuators()){
+        // System.out.println(act);
+        // }
+        // System.out.println("\n Sensors:");
+        // for(Sensor sensor:robot.getSensors()){
+        // System.out.println(sensor);
+        // }
+        // System.out.println("\n\n");
 
-		double ledRadius = 0.015;
+        double ledRadius = 0.015;
 
-		p0.set(ledRadius * 3 / 2, 0);
-		p0.rotate(orientation + Math.PI);
+        p0.set(ledRadius * 3 / 2, 0);
+        p0.rotate(orientation + Math.PI);
 
-		int ledX = transformX(p0.getX() + robot.getPosition().getX() - ledRadius);
-		int ledY = transformY(p0.getY() + robot.getPosition().getY() + ledRadius);
+        int ledX = transformX(p0.getX() + robot.getPosition().getX() - ledRadius);
+        int ledY = transformY(p0.getY() + robot.getPosition().getY() + ledRadius);
 
-		int leadDiameter = (int) Math.round(ledRadius * 2 * scale);
+        int leadDiameter = (int) Math.round(ledRadius * 2 * scale);
 
-		boolean paint = false;
+        boolean paint = false;
 
-		if (robot.getLedState() == LedState.BLINKING) {
-			if (blink) {
-				graphics.setColor(robot.getLedColor());
-				paint = true;
-				blink = false;
-			} else {
-				blink = true;
-			}
+        if (robot.getLedState() == LedState.BLINKING) {
+            if (blink) {
+                graphics.setColor(robot.getLedColor());
+                paint = true;
+                blink = false;
+            } else {
+                blink = true;
+            }
 
-		} else if (robot.getLedState() == LedState.ON) {
+        } else if (robot.getLedState() == LedState.ON) {
             graphics.setColor(robot.getLedColor());
-			paint = true;
-		}
-		if (paint)
-			graphics.fillOval(ledX, ledY, leadDiameter, leadDiameter);
+            paint = true;
+        }
+        if (paint)
+            graphics.fillOval(ledX, ledY, leadDiameter, leadDiameter);
         drawCircle(robot.getPosition(), 1);
+        drawHomeConnection(graphics, robot);
+        drawSinkConnection(graphics, robot);
+    }
+
+    /**
+     * Draws connection between a robot and the neighbour that connects him to home.
+     */
+    private void drawHomeConnection(Graphics graphics, Robot robot) {
+        graphics.setColor(Color.DARK_GRAY);
+        ODNetworkRobot odRobot = (ODNetworkRobot) robot;
+        EAHSimpleArenaEnvironment eahenv = (EAHSimpleArenaEnvironment) simulator.getEnvironment();
+
+        if (eahenv.getLongestRouteFromHome().contains(odRobot)) {
+            if (odRobot.getHomeRoute().size() > 0) {
+                PhysicalObject homeRobot = (PhysicalObject) odRobot.getHomeRoute().getLast();
+                Vector2d thisRobotPos = new Vector2d(transformX(odRobot.getPosition().getX()),
+                        transformY(odRobot.getPosition().getY()));
+                Vector2d wayHomeRobot = new Vector2d(transformX(homeRobot.getPosition().getX()),
+                        transformY(homeRobot.getPosition().getY()));
+                graphics.drawLine((int) thisRobotPos.x, (int) thisRobotPos.y, (int) wayHomeRobot.x,
+                        (int) wayHomeRobot.y);
+            }
+        }
+    }
+
+    private void drawSinkConnection(Graphics graphics, Robot robot) {
+        graphics.setColor(Color.orange);
+        ODNetworkRobot odRobot = (ODNetworkRobot) robot;
+        EAHSimpleArenaEnvironment eahenv = (EAHSimpleArenaEnvironment) simulator.getEnvironment();
+
+        if (eahenv.getLongestRouteFromHome().contains(odRobot)) {
+            if (odRobot.getSinkRoute().size() > 0) {
+                PhysicalObject homeRobot = (PhysicalObject) odRobot.getSinkRoute().getLast();
+                Vector2d thisRobotPos = new Vector2d(transformX(odRobot.getPosition().getX()),
+                        transformY(odRobot.getPosition().getY()));
+                Vector2d wayHomeRobot = new Vector2d(transformX(homeRobot.getPosition().getX()),
+                        transformY(homeRobot.getPosition().getY()));
+                graphics.drawLine((int) thisRobotPos.x, (int) thisRobotPos.y, (int) wayHomeRobot.x,
+                        (int) wayHomeRobot.y);
+            }
+        }
     }
 
     @Override
@@ -163,7 +206,7 @@ public class AdHocNetworkRenderer extends TwoDRendererDebug {
         g2.draw(e2);
         update(g2);
         // g2.draw(
-        //     new Polygon(new int[] { 0, 1, 2, 3}, new int[] {1,2,3,4}, 4)
+        // new Polygon(new int[] { 0, 1, 2, 3}, new int[] {1,2,3,4}, 4)
         // );
     }
 
@@ -189,7 +232,7 @@ public class AdHocNetworkRenderer extends TwoDRendererDebug {
 
             System.out.println(env.getAllObjects().get(3));
             for (PhysicalObject po : env.getAllObjects()) {
-                if(po instanceof Wall) {
+                if (po instanceof Wall) {
                     System.out.println(po);
                 }
             }
@@ -197,8 +240,9 @@ public class AdHocNetworkRenderer extends TwoDRendererDebug {
             repaint();
 
             // graphics.drawPolyline(xpoints.stream().mapToInt(Integer::valueOf).toArray(),
-            //         ypoints.stream().mapToInt(Integer::valueOf).toArray(), xpoints.size());
-            // drawMarker(graphics, new Marker(simulator, "name", 1, -1, -1, 0, 1, Color.cyan));
+            // ypoints.stream().mapToInt(Integer::valueOf).toArray(), xpoints.size());
+            // drawMarker(graphics, new Marker(simulator, "name", 1, -1, -1, 0, 1,
+            // Color.cyan));
         }
     }
 }

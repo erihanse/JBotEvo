@@ -72,14 +72,15 @@ public class StopIfnNeighboursController extends Controller {
         // Don't move if part of longest solution TODO: Buuut maybe move if you're close
         // to the others in the route.
         if (partOfLongestHomeRoute()) {
-            if (inOptimalRange()) {
+            if (inOptimalRange() || true) {
                 robot.stop();
                 robot.setBodyColor(1, 0, 0);
+                return;
             } else {
                 robot.setLedColor(Color.cyan);
                 robot.setLedState(LedState.ON);
             }
-            return;
+            // return;
         }
 
         if (((ODNetworkRobot) robot).getNumberOfNeighbours() == nNeighboursToStop) {

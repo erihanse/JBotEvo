@@ -12,6 +12,7 @@ import mathutils.Vector2d;
 import simulation.Simulator;
 import simulation.environment.Environment;
 import simulation.physicalobjects.Nest;
+import simulation.physicalobjects.PhysicalObject;
 import simulation.physicalobjects.PhysicalObjectType;
 import simulation.physicalobjects.Wall;
 import simulation.robot.Robot;
@@ -61,7 +62,7 @@ public class EAHSimpleArenaEnvironment extends Environment {
 		return homeNest;
 	}
 
-	public TargetNest getTargetNest() {
+	public TargetNest getSinkNest() {
 		return targetNest;
 	}
 

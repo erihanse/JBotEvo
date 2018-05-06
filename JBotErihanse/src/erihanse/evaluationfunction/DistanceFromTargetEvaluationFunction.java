@@ -26,7 +26,7 @@ public class DistanceFromTargetEvaluationFunction extends EvaluationFunction {
         int i = 0;
         double min = Double.MAX_VALUE;
         Robot closestRobot = null;
-        Vector2d targetPosition = ((EAHSimpleArenaEnvironment)simulator.getEnvironment()).getTargetNest().getPosition();
+        Vector2d targetPosition = ((EAHSimpleArenaEnvironment)simulator.getEnvironment()).getSinkNest().getPosition();
 
 		for (Robot r : robots) {
             distances[i] = r.getPosition().distanceTo(targetPosition);

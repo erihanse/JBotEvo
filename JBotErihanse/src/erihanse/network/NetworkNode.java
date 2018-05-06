@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import erihanse.robot.ODNetworkRobot;
+import simulation.physicalobjects.PhysicalObject;
 
-public interface NetworkNode {
+    public interface NetworkNode {
     /**
      * @return route to Home connection point for this Network Node
      */
