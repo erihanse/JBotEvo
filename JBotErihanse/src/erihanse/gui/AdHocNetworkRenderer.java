@@ -11,6 +11,7 @@ import erihanse.environment.EAHSimpleArenaEnvironment;
 import gui.renderer.TwoDRendererDebug;
 import mathutils.Point2d;
 import mathutils.Vector2d;
+import simulation.environment.Environment;
 import simulation.physicalobjects.PhysicalObject;
 import simulation.physicalobjects.Wall;
 import simulation.physicalobjects.collisionhandling.knotsandbolts.PolygonShape;
@@ -109,4 +110,9 @@ public class AdHocNetworkRenderer extends TwoDRendererDebug {
             // drawMarker(graphics, new Marker(simulator, "name", 1, -1, -1, 0, 1, Color.cyan));
         }
     }
+
+    @Override
+	protected void drawArea(Graphics g, Environment environment) {
+
+	}
 }

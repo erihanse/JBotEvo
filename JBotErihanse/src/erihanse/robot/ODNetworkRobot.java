@@ -25,14 +25,15 @@ public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI
 	private int sourceHops = -1;
 	private int destinationHops = -1;
 
-	private LinkedList<NetworkNode> homeRoute = new LinkedList<NetworkNode>();
-	private LinkedList<NetworkNode> targetRoute = new LinkedList<NetworkNode>();
-
+	protected LinkedList<NetworkNode> homeRoute = new LinkedList<NetworkNode>();
+	protected LinkedList<NetworkNode> targetRoute = new LinkedList<NetworkNode>();
+	protected EAHSimpleArenaEnvironment eahenv;
 	protected Simulator simulator;
 
 	public ODNetworkRobot(Simulator simulator, Arguments args) {
 		super(simulator, args);
 		this.simulator = simulator;
+		this.eahenv = (EAHSimpleArenaEnvironment) simulator.getEnvironment();
 	}
 
 	/**
@@ -222,7 +223,12 @@ public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI
 			.toArray();
 	}
 
+	@Override
 	public int getId() {
 		return getRobotId();
+	}
+
+	public LinkedList<NetworkNode> getLongestRoute() {
+		return eahenv.getLongestRouteFromHome();
 	}
 }

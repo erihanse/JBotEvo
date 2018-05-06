@@ -15,4 +15,6 @@ public interface NetworkNode {
 
     void calculateHomeRoute();
 
+    public int getId();
+
 }

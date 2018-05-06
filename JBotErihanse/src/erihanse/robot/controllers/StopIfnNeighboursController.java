@@ -3,7 +3,10 @@ package erihanse.robot.controllers;
 import java.util.Random;
 
 import controllers.Controller;
+import environment.SimpleArenaEnvironment;
 import erihanse.robot.sensors.HomeRouteSensor;
+import erihanse.environment.EAHSimpleArenaEnvironment;
+import erihanse.network.NetworkNode;
 import erihanse.robot.ODNetworkRobot;
 import simulation.Simulator;
 import simulation.robot.DifferentialDriveRobot;
@@ -19,14 +22,14 @@ public class StopIfnNeighboursController extends Controller {
     double lastLeft = 0;
     double lastRight = 0;
 
+    @ArgumentsAnnotation(name = "N neighbours to stop on", defaultValue = "4")
+    private int nNeighboursToStop;
     @ArgumentsAnnotation(name = "Frames to sleep when stopping", defaultValue = "0")
 	private double stopTime;
 
-    // TODO: cheating
     Simulator simulator;
     HomeRouteSensor homeSensor;
-    @ArgumentsAnnotation(name = "N neighbours to stop on", defaultValue = "4")
-    private final int nNeighboursToStop = 3;
+    EAHSimpleArenaEnvironment eahenv;
 
 
 
@@ -36,16 +39,25 @@ public class StopIfnNeighboursController extends Controller {
             Arguments actuators = new Arguments(args.getArgumentAsString("actuators"));
             maxSpeed = actuators.getArgumentAsDoubleOrSetDefault("maxspeed", 0.1);
         }
+        nNeighboursToStop = args.getArgumentAsIntOrSetDefault("nneighbourstostopon", 4);
+        stopTime = args.getArgumentAsDoubleOrSetDefault("stoptime", 0);
+
         this.simulator = simulator;
+        this.eahenv = (EAHSimpleArenaEnvironment) simulator.getEnvironment();
+
         homeSensor = (HomeRouteSensor) robot.getSensorByType(HomeRouteSensor.class);
+
     }
 
     @Override
     public void controlStep(double time) {
+        // Stay stopped if previously stopped until timer runs out
         if (time < timeToStartAgain) {
             return;
         }
-        if (((ODNetworkRobot) robot).getNumberOfNeighbours() == nNeighboursToStop) {
+
+        // Don't move if part of longest solution
+        if (((ODNetworkRobot) robot).getNumberOfNeighbours() == nNeighboursToStop && partOfLongestHomeRoute()) {
             timeToStartAgain = time + stopTime;
             robot.stop();
             robot.setBodyColor(1, 0, 0);
@@ -85,8 +97,9 @@ public class StopIfnNeighboursController extends Controller {
 
         int sensorReading = (int) homeSensor.getSensorReading(999);
         ((ODNetworkRobot) robot).setSourceHops(sensorReading);
-        // ((MyDifferentialDriveRobot) robot)
-        // .setDestinationHops((int)
-        // robot.getSensorByType(DestinationHopsSensor.class).getSensorReading(999));
     }
+
+	private boolean partOfLongestHomeRoute() {
+        return (eahenv.getLongestRouteFromHome().contains((NetworkNode) robot));
+	}
 }

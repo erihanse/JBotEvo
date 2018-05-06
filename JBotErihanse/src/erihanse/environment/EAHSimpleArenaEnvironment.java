@@ -1,8 +1,10 @@
 package erihanse.environment;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
+import erihanse.network.NetworkNode;
 import erihanse.physicalobjects.HomeNest;
 import erihanse.physicalobjects.TargetNest;
 import erihanse.robot.ODNetworkRobot;
@@ -157,6 +159,17 @@ public class EAHSimpleArenaEnvironment extends Environment {
 
 
 		return odrobots;
+	}
+	public LinkedList<NetworkNode> getLongestRouteFromHome() {
+
+		LinkedList<NetworkNode> longestRoute = new LinkedList<>();
+
+		for (ODNetworkRobot robot : getODRobots()) {
+			if (robot.getHomeRoute().size() > longestRoute.size()) {
+				longestRoute = robot.getHomeRoute();
+			}
+		}
+		return longestRoute;
 	}
 
 	// public ODNetworkRobot[] getRobots() {

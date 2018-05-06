@@ -4,6 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -27,12 +33,21 @@ import updatables.BlenderExport;
 public class AdHocResultViewerGui extends ResultViewerGui {
 	protected JTextField homeHopsTextField;
 	protected JTextField destinationHopsTextField;
-    public AdHocResultViewerGui (JBotSim jBotEvolver, Arguments args) {
-			super(jBotEvolver, args);
-    }
 
-    @Override
-    protected void loadCurrentFile() {
+	/**
+	 * Opens up a new monitor for showing the fitness over time when performing live
+	 * simulations
+	 */
+	protected JCheckBox monitorFitnessCheckBox;
+	protected boolean showFitnessMonitor;
+	private JTextField longestRoute;
+
+	public AdHocResultViewerGui(JBotSim jBotEvolver, Arguments args) {
+		super(jBotEvolver, args);
+	}
+
+	@Override
+	protected void loadCurrentFile() {
 		String filename = currentFileTextField.getText();
 		try {
 			if (validFile(filename)) {
@@ -46,8 +61,9 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 				}
 
 				jBotEvolver.loadFile(filename, extra);
-                simulator = loadSimulator();
-                simulator.addCallback(new FitnessMonitor(jBotEvolver, evaluationFunction));
+				simulator = loadSimulator();
+				if (showFitnessMonitor)
+					simulator.addCallback(new FitnessMonitor(jBotEvolver, evaluationFunction));
 				if (exportToBlender != null && exportToBlender.isSelected())
 					simulator.addCallback(new BlenderExport());
 				if (simulateUntil == 0)
@@ -103,6 +119,9 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 		sideTopPanel.add(playPosition);
 
 		sideTopPanel.add(new JLabel(" "));
+		monitorFitnessCheckBox = new JCheckBox("Show fitness monitor");
+		monitorFitnessCheckBox.setAlignmentX(Component.CENTER_ALIGNMENT);
+		sideTopPanel.add(monitorFitnessCheckBox);
 
 		if (enableDebugOptions) {
 
@@ -110,10 +129,9 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 			neuralNetworkCheckbox.setAlignmentX(Component.CENTER_ALIGNMENT);
 			sideTopPanel.add(neuralNetworkCheckbox);
 			/*
-			 * neuralNetworkViewerCheckbox = new JCheckBox(
-			 * "Show Neural Network #2");
-			 * neuralNetworkViewerCheckbox.setAlignmentX(Component.
-			 * CENTER_ALIGNMENT); sideTopPanel.add(neuralNetworkViewerCheckbox);
+			 * neuralNetworkViewerCheckbox = new JCheckBox( "Show Neural Network #2");
+			 * neuralNetworkViewerCheckbox.setAlignmentX(Component. CENTER_ALIGNMENT);
+			 * sideTopPanel.add(neuralNetworkViewerCheckbox);
 			 */
 			exportToBlender = new JCheckBox("Export to Blender");
 			exportToBlender.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -146,6 +164,12 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 		destinationHopsTextField.setHorizontalAlignment(JTextField.CENTER);
 		statusPanel.add(destinationHopsTextField);
 
+		// TODO:
+		statusPanel.add(new JLabel("Longest route:"));
+		longestRoute = new JTextField("N/A");
+		// longestRoute.setHorizontalAlignment(JTextField.CENTER);
+		statusPanel.add(longestRoute);
+
 		sideTopPanel.add(statusPanel);
 		statusPanel.setPreferredSize(new Dimension(panelWidth, 100));
 
@@ -165,12 +189,30 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 
 		int highestHomeHops = 0;
 		int highestDestHops = 0;
+		LinkedList<NetworkNode> longestRoute = new LinkedList<>();
 		for (Robot r : simulator.getRobots()) {
 			NetworkNode node = (NetworkNode) r;
 			highestHomeHops = Math.max(node.getHomeRoute().size(), highestHomeHops);
 			highestDestHops = Math.max(node.getTargetRoute().size(), highestDestHops);
+			longestRoute = longestRoute.size() > node.getHomeRoute().size() ? longestRoute : node.getHomeRoute();
 		}
 		homeHopsTextField.setText(String.valueOf(highestHomeHops));
 		destinationHopsTextField.setText(String.valueOf(highestDestHops));
+		longestRoute.stream()
+				.map(s -> String.valueOf(s.getId()))
+				.collect(Collectors.joining("->"));
+
+	}
+
+	@Override
+	protected void initListeners() {
+		super.initListeners();
+		monitorFitnessCheckBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JCheckBox check = (JCheckBox) arg0.getSource();
+				showFitnessMonitor = check.isSelected();
+			}
+		});
 	}
 }

@@ -3,10 +3,13 @@ package erihanse.physicalobjects;
 import java.awt.Color;
 import java.util.LinkedList;
 
+import erihanse.environment.EAHSimpleArenaEnvironment;
 import erihanse.network.NetworkNode;
+import erihanse.robot.ODNetworkRobot;
 import simulation.Simulator;
 import simulation.environment.Environment;
 import simulation.physicalobjects.Nest;
+import simulation.robot.Robot;
 
 /**
  * HomeNest
@@ -34,6 +37,21 @@ public class HomeNest extends Nest implements NetworkNode {
     public LinkedList<NetworkNode> getTargetRoute() {
         return targetRoute;
     }
+
+    /**
+     * TODO. Moved this to eahsimplearenaenvironment..?
+     */
+    public LinkedList<NetworkNode> getLongestRouteFromHome() {
+
+		LinkedList<NetworkNode> longestRoute = new LinkedList<>();
+
+		for (ODNetworkRobot robot : ((EAHSimpleArenaEnvironment) env).getODRobots()) {
+			if (robot.getHomeRoute().size() > longestRoute.size()) {
+				longestRoute = robot.getHomeRoute();
+			}
+		}
+		return longestRoute;
+	}
 
 	@Override
 	public void calculateHomeRoute() {
