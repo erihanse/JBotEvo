@@ -34,21 +34,12 @@ public class FullConnectionEvaluationFunction extends EvaluationFunction {
 		for (Robot r : simulator.getRobots()) {
 			NetworkNode node = (NetworkNode) r;
 			int homeRouteHops = node.getHomeRoute().size();
-			int targetRouteHops = node.getTargetRoute().size();
+			int targetRouteHops = node.getSinkRoute().size();
 			highestHomeHops = Math.max(homeRouteHops, highestHomeHops);
 			highestDestHops = Math.max(targetRouteHops, highestDestHops);
 
-			if (homeRouteHops > 0 && targetRouteHops > 0) {
-				System.out.println("Full connectivity");
-			}
 		}
 		// TODO: Set fitness to something meaningful
 		fitness = highestHomeHops;
-		// Durp
-		// if (highestHomeHops > 0 ^ highestDestHops > 0) {
-		// 	fitness = Math.max(highestHomeHops, highestDestHops);
-		// } else if (highestHomeHops > 0 && highestDestHops > 0) {
-		// 	fitness = Integer.MAX_VALUE;
-		// }
 	}
 }

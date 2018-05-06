@@ -21,7 +21,7 @@ public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI
 	 * Simulated network range of this robot.
 	 */
 	@ArgumentsAnnotation(name = "range", defaultValue = "1", help = "Simulated signal range of the attached networking device of the robot")
-	public double range = 1;
+	private double range = 1;
 	private int sourceHops = -1;
 	private int destinationHops = -1;
 
@@ -34,6 +34,10 @@ public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI
 		super(simulator, args);
 		this.simulator = simulator;
 		this.eahenv = (EAHSimpleArenaEnvironment) simulator.getEnvironment();
+	}
+
+	public double getRange() {
+		return range;
 	}
 
 	/**
@@ -70,7 +74,7 @@ public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI
 	}
 
 	@Override
-	public LinkedList<NetworkNode> getTargetRoute() {
+	public LinkedList<NetworkNode> getSinkRoute() {
 		return targetRoute;
 	}
 
@@ -174,7 +178,7 @@ public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI
 			}
 
 			neighbourNode = (NetworkNode) neighbourRobot;
-			LinkedList<NetworkNode> neighbourRoute = neighbourNode.getTargetRoute();
+			LinkedList<NetworkNode> neighbourRoute = neighbourNode.getSinkRoute();
 
 			// If our neighbour doesn't know about a way to target, skip it
 			if (neighbourRoute.isEmpty()) {

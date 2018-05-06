@@ -30,7 +30,7 @@ public class EAHSimpleArenaEnvironment extends Environment {
 
 	public EAHSimpleArenaEnvironment(Simulator simulator, Arguments args) {
 		super(simulator, args);
-		//setupWalls(simulator, args);
+		// setupWalls(simulator, args);
 	}
 
 	@Override
@@ -79,13 +79,15 @@ public class EAHSimpleArenaEnvironment extends Environment {
 	 */
 	protected void placeRobots(Simulator simulator) {
 		Random random = simulator.getRandom();
-		// place robots in a random position, with a random orientation, at the beginning of the simulation
+		// place robots in a random position, with a random orientation, at the
+		// beginning of the simulation
 		ArrayList<Robot> robots = this.robots;
 		double maxDisperseValue = (homeNest.getRadius() - wallThickness) / Math.sqrt(2);
 		for (int i = 0; i < robots.size(); i++) {
 			Robot r = robots.get(i);
-			// Vector2d randomPosition = generateRandomPosition(simulator, this.width - (wallThickness + r.getRadius()),
-			// 		this.height - (wallThickness + r.getRadius()));
+			// Vector2d randomPosition = generateRandomPosition(simulator, this.width -
+			// (wallThickness + r.getRadius()),
+			// this.height - (wallThickness + r.getRadius()));
 			// r.teleportTo(randomPosition);
 
 			Vector2d distributionPoint = homeNest.getPosition();
@@ -99,13 +101,13 @@ public class EAHSimpleArenaEnvironment extends Environment {
 			double y = distributionPoint.y + (random.nextDouble() * maxDisperseValue + wallThickness + 0.5);
 
 			r.teleportTo(new Vector2d(x, y));
-			//robots current orientation +- a given offset
+			// robots current orientation +- a given offset
 			double orientation = r.getOrientation() + (random.nextDouble() * 2 - 1) * this.randomizeOrientationValue;
 			r.setOrientation(orientation);
 		}
-		robots.get(0).teleportTo(new Vector2d(-1.7, -1.7));
-		robots.get(1).teleportTo(new Vector2d(-1,-1));
-		robots.get(2).teleportTo(new Vector2d(-0.5,-0.5));
+		// robots.get(0).teleportTo(new Vector2d(-1.7, -1.7));
+		// robots.get(1).teleportTo(new Vector2d(-1, -1));
+		// robots.get(2).teleportTo(new Vector2d(-0.5, -0.5));
 	}
 
 	protected Vector2d generateRandomPosition(Simulator simulator, double width, double height) {
@@ -159,16 +161,16 @@ public class EAHSimpleArenaEnvironment extends Environment {
 		// @SuppressWarnings("unchecked")
 		odrobots = (ArrayList<ODNetworkRobot>) robots;
 
-
-
 		return odrobots;
 	}
+
 	public LinkedList<NetworkNode> getLongestRouteFromHome() {
 
 		LinkedList<NetworkNode> longestRoute = new LinkedList<>();
+		longestRoute.add(homeNest);
 
 		for (ODNetworkRobot robot : getODRobots()) {
-			if (robot.getHomeRoute().size() > longestRoute.size()) {
+			if (robot.getHomeRoute().size() + 1 > longestRoute.size()) {
 				longestRoute = (LinkedList<NetworkNode>) robot.getHomeRoute().clone();
 				longestRoute.add(robot);
 			}
@@ -180,16 +182,11 @@ public class EAHSimpleArenaEnvironment extends Environment {
 		LinkedList<NetworkNode> longestRoute = new LinkedList<>();
 
 		for (ODNetworkRobot robot : getODRobots()) {
-			if (robot.getTargetRoute().size() > longestRoute.size()) {
-				longestRoute = (LinkedList<NetworkNode>) robot.getTargetRoute().clone();
+			if (robot.getSinkRoute().size() > longestRoute.size()) {
+				longestRoute = (LinkedList<NetworkNode>) robot.getSinkRoute().clone();
 				longestRoute.add(robot);
 			}
 		}
 		return longestRoute;
 	}
-
-	// public ODNetworkRobot[] getRobots() {
-
-	// 	return null;
-	// }
 }

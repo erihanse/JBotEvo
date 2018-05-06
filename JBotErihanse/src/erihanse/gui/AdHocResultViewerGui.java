@@ -83,7 +83,7 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 	@Override
 	protected JPanel initRightWrapperPanel() {
 
-		int panelWidth = 150;
+		int panelWidth = 250;
 
 		JPanel sideTopPanel = new JPanel();
 		sideTopPanel.setLayout(new BoxLayout(sideTopPanel, BoxLayout.Y_AXIS));

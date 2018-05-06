@@ -1,6 +1,9 @@
 package erihanse.network;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+
+import erihanse.robot.ODNetworkRobot;
 
 public interface NetworkNode {
     /**
@@ -11,10 +14,15 @@ public interface NetworkNode {
     /**
      * @return route to Target connection point for this Network Node
      */
-    LinkedList<NetworkNode> getTargetRoute();
+    LinkedList<NetworkNode> getSinkRoute();
 
     void calculateHomeRoute();
 
     public int getId();
+
+    public default ArrayList<ODNetworkRobot> robotsInRange() {
+        // TODO: Implement
+        return null;
+    };
 
 }

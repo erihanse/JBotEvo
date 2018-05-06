@@ -34,7 +34,7 @@ public class HomeNest extends Nest implements NetworkNode {
     }
 
     @Override
-    public LinkedList<NetworkNode> getTargetRoute() {
+    public LinkedList<NetworkNode> getSinkRoute() {
         return targetRoute;
     }
 
