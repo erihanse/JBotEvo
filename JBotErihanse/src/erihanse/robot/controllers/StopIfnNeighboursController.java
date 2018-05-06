@@ -1,15 +1,15 @@
 package erihanse.robot.controllers;
 
-import java.util.Random;
+import java.awt.Color;
 
 import controllers.Controller;
-import environment.SimpleArenaEnvironment;
-import erihanse.robot.sensors.HomeRouteSensor;
 import erihanse.environment.EAHSimpleArenaEnvironment;
 import erihanse.network.NetworkNode;
 import erihanse.robot.ODNetworkRobot;
+import erihanse.robot.sensors.HomeRouteSensor;
 import simulation.Simulator;
 import simulation.robot.DifferentialDriveRobot;
+import simulation.robot.LedState;
 import simulation.robot.Robot;
 import simulation.util.Arguments;
 import simulation.util.ArgumentsAnnotation;
@@ -52,6 +52,8 @@ public class StopIfnNeighboursController extends Controller {
     @Override
     public void controlStep(double time) {
         // Stay stopped if previously stopped until timer runs out
+        // robot.setLedState(LedState.ON);
+        // robot.setLedColor(Color.cyan);
         if (time < timeToStartAgain) {
             return;
         }
@@ -63,6 +65,13 @@ public class StopIfnNeighboursController extends Controller {
             robot.setBodyColor(1, 0, 0);
             return;
         }
+
+        if (eahenv.getLongestRouteFromHome().contains(robot)) {
+            robot.setLedColor(Color.cyan);
+        } else {
+            robot.setLedColor(Color.black);
+        }
+
         int direction = simulator.getRandom().nextInt(4);
 
         robot.setBodyColor(0, 0, 0);

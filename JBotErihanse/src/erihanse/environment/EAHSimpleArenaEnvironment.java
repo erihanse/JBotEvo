@@ -103,6 +103,9 @@ public class EAHSimpleArenaEnvironment extends Environment {
 			double orientation = r.getOrientation() + (random.nextDouble() * 2 - 1) * this.randomizeOrientationValue;
 			r.setOrientation(orientation);
 		}
+		robots.get(0).teleportTo(new Vector2d(-1.7, -1.7));
+		robots.get(1).teleportTo(new Vector2d(-1,-1));
+		robots.get(2).teleportTo(new Vector2d(-0.5,-0.5));
 	}
 
 	protected Vector2d generateRandomPosition(Simulator simulator, double width, double height) {
@@ -166,7 +169,20 @@ public class EAHSimpleArenaEnvironment extends Environment {
 
 		for (ODNetworkRobot robot : getODRobots()) {
 			if (robot.getHomeRoute().size() > longestRoute.size()) {
-				longestRoute = robot.getHomeRoute();
+				longestRoute = (LinkedList<NetworkNode>) robot.getHomeRoute().clone();
+				longestRoute.add(robot);
+			}
+		}
+		return longestRoute;
+	}
+
+	public LinkedList<NetworkNode> getLongestRouteFromSink() {
+		LinkedList<NetworkNode> longestRoute = new LinkedList<>();
+
+		for (ODNetworkRobot robot : getODRobots()) {
+			if (robot.getTargetRoute().size() > longestRoute.size()) {
+				longestRoute = (LinkedList<NetworkNode>) robot.getTargetRoute().clone();
+				longestRoute.add(robot);
 			}
 		}
 		return longestRoute;

@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import erihanse.environment.EAHSimpleArenaEnvironment;
 import erihanse.network.NetworkNode;
 import gui.ResultViewerGui;
 import simulation.JBotSim;
@@ -32,7 +33,7 @@ import updatables.BlenderExport;
  */
 public class AdHocResultViewerGui extends ResultViewerGui {
 	protected JTextField homeHopsTextField;
-	protected JTextField destinationHopsTextField;
+	protected JTextField SinkHopsTextField;
 
 	/**
 	 * Opens up a new monitor for showing the fitness over time when performing live
@@ -40,7 +41,8 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 	 */
 	protected JCheckBox monitorFitnessCheckBox;
 	protected boolean showFitnessMonitor;
-	private JTextField longestRoute;
+	private JTextField longestHomeRoute;
+	private JTextField longestSinkRoute;
 
 	public AdHocResultViewerGui(JBotSim jBotEvolver, Arguments args) {
 		super(jBotEvolver, args);
@@ -141,7 +143,7 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 		}
 
 		// Status panel
-		JPanel statusPanel = new JPanel(new GridLayout(5, 2));
+		JPanel statusPanel = new JPanel(new GridLayout(6, 2));
 		statusPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		statusPanel.add(new JLabel("Control step: "));
@@ -160,15 +162,18 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 		statusPanel.add(homeHopsTextField);
 
 		statusPanel.add(new JLabel("Max Dst Hops: "));
-		destinationHopsTextField = new JTextField("N/A");
-		destinationHopsTextField.setHorizontalAlignment(JTextField.CENTER);
-		statusPanel.add(destinationHopsTextField);
+		SinkHopsTextField = new JTextField("N/A");
+		SinkHopsTextField.setHorizontalAlignment(JTextField.CENTER);
+		statusPanel.add(SinkHopsTextField);
 
 		// TODO:
-		statusPanel.add(new JLabel("Longest route:"));
-		longestRoute = new JTextField("N/A");
-		// longestRoute.setHorizontalAlignment(JTextField.CENTER);
-		statusPanel.add(longestRoute);
+		statusPanel.add(new JLabel("Longest home route:"));
+		longestHomeRoute = new JTextField("N/A");
+		statusPanel.add(longestHomeRoute);
+
+		statusPanel.add(new JLabel("Longest sink route:"));
+		longestSinkRoute = new JTextField("N/A");
+		statusPanel.add(longestSinkRoute);
 
 		sideTopPanel.add(statusPanel);
 		statusPanel.setPreferredSize(new Dimension(panelWidth, 100));
@@ -186,21 +191,26 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 	@Override
 	public synchronized void update(Simulator simulator) {
 		super.update(simulator);
+		EAHSimpleArenaEnvironment eahenv = (EAHSimpleArenaEnvironment) simulator.getEnvironment();
 
-		int highestHomeHops = 0;
-		int highestDestHops = 0;
-		LinkedList<NetworkNode> longestRoute = new LinkedList<>();
-		for (Robot r : simulator.getRobots()) {
-			NetworkNode node = (NetworkNode) r;
-			highestHomeHops = Math.max(node.getHomeRoute().size(), highestHomeHops);
-			highestDestHops = Math.max(node.getTargetRoute().size(), highestDestHops);
-			longestRoute = longestRoute.size() > node.getHomeRoute().size() ? longestRoute : node.getHomeRoute();
-		}
-		homeHopsTextField.setText(String.valueOf(highestHomeHops));
-		destinationHopsTextField.setText(String.valueOf(highestDestHops));
-		longestRoute.stream()
-				.map(s -> String.valueOf(s.getId()))
-				.collect(Collectors.joining("->"));
+		LinkedList<NetworkNode> longestHomeRoute = eahenv.getLongestRouteFromHome();
+		LinkedList<NetworkNode> longestSinkRoute = eahenv.getLongestRouteFromSink();
+		homeHopsTextField.setText(String.valueOf(longestHomeRoute.size()));
+		SinkHopsTextField.setText(String.valueOf(longestSinkRoute.size()));
+
+		// Display longest home route
+		String longestHomeRouteText = longestHomeRoute.stream()
+			.map(s -> String.valueOf(s.getId()))
+			.collect(Collectors.joining("->"));
+		this.longestHomeRoute.setText(longestHomeRouteText);
+		this.longestHomeRoute.setToolTipText(longestHomeRouteText);
+
+		// Display longest sink route
+		String longestSinkRouteText = longestSinkRoute.stream()
+			.map(s -> String.valueOf(s.getId()))
+			.collect(Collectors.joining("->"));
+		this.longestSinkRoute.setText(longestSinkRouteText);
+		this.longestSinkRoute.setToolTipText(longestSinkRouteText);
 
 	}
 
