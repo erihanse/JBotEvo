@@ -59,6 +59,11 @@ public class StopIfnNeighboursController extends Controller {
 
     @Override
     public void controlStep(double time) {
+        if (partOfLongestHomeRoute() && partOfLongestSinkRoute()) {
+            robot.setBodyColor(Color.GREEN);
+            return;
+        }
+
         // Stay stopped if previously stopped until timer runs out
         // robot.setLedState(LedState.ON);
         // robot.setLedColor(Color.cyan);
@@ -72,7 +77,7 @@ public class StopIfnNeighboursController extends Controller {
         // Don't move if part of longest solution TODO: Buuut maybe move if you're close
         // to the others in the route.
         if (partOfLongestHomeRoute()) {
-            if (inOptimalRange() || true) {
+            if (inOptimalRange()) {
                 robot.stop();
                 robot.setBodyColor(1, 0, 0);
                 return;
@@ -83,12 +88,12 @@ public class StopIfnNeighboursController extends Controller {
             // return;
         }
 
-        if (((ODNetworkRobot) robot).getNumberOfNeighbours() == nNeighboursToStop) {
-            timeToStartAgain = time + stopTime;
-            robot.stop();
-            robot.setBodyColor(1, 0, 0);
-            return;
-        }
+        // if (((ODNetworkRobot) robot).getNumberOfNeighbours() == nNeighboursToStop) {
+        //     timeToStartAgain = time + stopTime;
+        //     robot.stop();
+        //     robot.setBodyColor(1, 0, 0);
+        //     return;
+        // }
 
         int direction = simulator.getRandom().nextInt(4);
 
@@ -127,15 +132,6 @@ public class StopIfnNeighboursController extends Controller {
     }
 
     private boolean inOptimalRange() {
-        // TODO: implement
-        // Filter out neighbouring robots only participating in main route
-        // List<? extends NetworkNode> neighBoursInHomeRoute =
-        // eahenv.getLongestRouteFromHome()
-        // .stream()
-        // .filter(homeRouteRobot -> odRobot.robotsInRange().contains(homeRouteRobot))
-        // .filter(homeRouteRobot -> odRobot.getPosition().distanceTo(((ODNetworkRobot)
-        // homeRouteRobot).getPosition()) < odRobot.getRange())
-        // .collect(Collectors.toList());
         Vector2d robpos = odRobot.getPosition();
         return eahenv.getLongestRouteFromHome()
             .stream()
@@ -149,5 +145,9 @@ public class StopIfnNeighboursController extends Controller {
 
     private boolean partOfLongestHomeRoute() {
         return (eahenv.getLongestRouteFromHome().contains((NetworkNode) robot));
+    }
+
+    private boolean partOfLongestSinkRoute() {
+        return (eahenv.getLongestRouteFromSink().contains((NetworkNode) robot));
     }
 }

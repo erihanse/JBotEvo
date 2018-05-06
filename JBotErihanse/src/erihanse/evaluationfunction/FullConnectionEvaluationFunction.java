@@ -31,22 +31,21 @@ public class FullConnectionEvaluationFunction extends EvaluationFunction {
 	public void update(Simulator simulator) {
 		EAHSimpleArenaEnvironment eahenv = (EAHSimpleArenaEnvironment) simulator.getEnvironment();
 
-		ODNetworkRobot closestRobot = getClosestRobotFromSink(simulator, eahenv);
+		NetworkNode closestRobot = getClosestNetworkNodeFromSink(simulator, eahenv);
 		// fitness =
 		// eahenv.getTargetNest().getPosition().distanceTo(closestRobot.getPosition());
 
 	}
 
-	private ODNetworkRobot getClosestRobotFromSink(Simulator simulator, EAHSimpleArenaEnvironment eahenv) {
+	private NetworkNode getClosestNetworkNodeFromSink(Simulator simulator, EAHSimpleArenaEnvironment eahenv) {
 		for (Robot r : simulator.getRobots()) {
 			NetworkNode node = (NetworkNode) r;
 			if (node.getHomeRoute().size() > 0 && node.getSinkRoute().size() > 0) {
 				System.out.println("Full connectivity");
-				simulator.stopSimulation();
 			}
 		}
 
-		ODNetworkRobot closestNetworkRobot = (ODNetworkRobot) eahenv.getLongestRouteFromHome()
+		NetworkNode closestNetworkRobot = eahenv.getLongestRouteFromHome()
 			.stream()
 			.min(new Comparator<NetworkNode>() {
 				@Override

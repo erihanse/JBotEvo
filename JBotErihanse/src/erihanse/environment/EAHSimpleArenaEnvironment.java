@@ -181,6 +181,7 @@ public class EAHSimpleArenaEnvironment extends Environment {
 
 	public LinkedList<NetworkNode> getLongestRouteFromSink() {
 		LinkedList<NetworkNode> longestRoute = new LinkedList<>();
+		longestRoute.add(targetNest);
 
 		for (ODNetworkRobot robot : getODRobots()) {
 			if (robot.getSinkRoute().size() > longestRoute.size()) {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import erihanse.robot.ODNetworkRobot;
+import mathutils.Vector2d;
 import simulation.physicalobjects.PhysicalObject;
 
     public interface NetworkNode {
@@ -26,4 +27,5 @@ import simulation.physicalobjects.PhysicalObject;
         return null;
     };
 
+    public Vector2d getPosition();
 }
