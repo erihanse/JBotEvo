@@ -1,11 +1,6 @@
 package erihanse.robot.controllers;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import controllers.Controller;
 import erihanse.environment.EAHSimpleArenaEnvironment;
@@ -14,7 +9,6 @@ import erihanse.robot.ODNetworkRobot;
 import erihanse.robot.sensors.HomeRouteSensor;
 import mathutils.Vector2d;
 import simulation.Simulator;
-import simulation.physicalobjects.PhysicalObject;
 import simulation.robot.DifferentialDriveRobot;
 import simulation.robot.LedState;
 import simulation.robot.Robot;

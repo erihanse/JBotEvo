@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import commoninterface.neat.utils.MathUtils;
 import erihanse.commoninterface.WLANNetworkCIRobot;
+import erihanse.commoninterface.sensors.DistanceTravelledSimSensor;
 import erihanse.environment.EAHSimpleArenaEnvironment;
 import erihanse.mathutils.MyMathUtils;
 import erihanse.network.NetworkNode;
@@ -49,7 +50,8 @@ public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI
 	}
 
 	/**
-	 * @param sourceHops the sourceHops to set
+	 * @param sourceHops
+	 *                       the sourceHops to set
 	 */
 	public void setSourceHops(int sourceHops) {
 		this.sourceHops = sourceHops;
@@ -63,7 +65,8 @@ public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI
 	}
 
 	/**
-	 * @param destinationHops the destinationHops to set
+	 * @param destinationHops
+	 *                            the destinationHops to set
 	 */
 	public void setDestinationHops(int destinationHops) {
 		this.destinationHops = destinationHops;
@@ -231,5 +234,9 @@ public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI
 	@Override
 	public int getId() {
 		return getRobotId();
+	}
+
+	@Override
+	public void shutdown() {
 	}
 }

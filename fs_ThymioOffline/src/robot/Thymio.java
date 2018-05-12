@@ -68,7 +68,7 @@ public class Thymio extends DifferentialDriveRobot implements ThymioCI, Stoppabl
 
 	private InAreaASensor areaASensor;
 	private InAreaBSensor areaBSensor;
-	
+
 	private Vector2d virtualPosition;
 	private Double virtualOrientation;
 
@@ -92,7 +92,7 @@ public class Thymio extends DifferentialDriveRobot implements ThymioCI, Stoppabl
 		ArrayList<BroadcastMessage> broadcastMessages = new ArrayList<BroadcastMessage>();
 		broadcastMessages.add(new HeartbeatBroadcastMessage(this));
 		broadcastMessages.add(new ODNEATGenomeBroadcastMessage(this));
-		
+
 		broadcastMessages.add(new InAreaBroadcastMessage(this));
 
 		//broadcastMessages.add(new SharedThymioBroadcastMessage(this));
@@ -156,8 +156,8 @@ public class Thymio extends DifferentialDriveRobot implements ThymioCI, Stoppabl
 		if (logger != null)
 			logger.stopLogging();
 
-		System.out.println("# Finished Controller cleanup!");
-	} 
+		// System.out.println("# Finished Controller cleanup!");
+	}
 
 	@Override
 	public void updateSensors(double simulationStep, ArrayList<PhysicalObject> teleported) {
@@ -232,7 +232,7 @@ public class Thymio extends DifferentialDriveRobot implements ThymioCI, Stoppabl
 		readings.add((short)irSensor.getSensorReading(6));
 
 		return readings;
-	}       
+	}
 
 	@Override
 	public double[] getCameraReadings() {
@@ -482,7 +482,7 @@ public class Thymio extends DifferentialDriveRobot implements ThymioCI, Stoppabl
 	}
 
 	/**
-	 * 	prox.ground.reflected : amount of light received when the sensor emits infrared, 
+	 * 	prox.ground.reflected : amount of light received when the sensor emits infrared,
 	 * varies between 0 (no reflected light) and 1023 (maximum reflected light)
 	 */
 	@Override
@@ -498,10 +498,10 @@ public class Thymio extends DifferentialDriveRobot implements ThymioCI, Stoppabl
 		else if(this.useMultiNestSensor){
 			if(areaASensor == null)
 				areaASensor = (InAreaASensor)getSensorByType(InAreaASensor.class);
-			
+
 			if(areaBSensor == null)
 				areaBSensor = (InAreaBSensor)getSensorByType(InAreaBSensor.class);
-			
+
 			if(areaASensor.isInNest())
 				readings.add((short) 0);
 			else if(areaBSensor.isInNest())
@@ -519,7 +519,7 @@ public class Thymio extends DifferentialDriveRobot implements ThymioCI, Stoppabl
 	public void updateRobotsPositioning(int otherRobot, boolean areaA,
 			boolean areaB) {
 		if(otherRobot != this.id)
-			this.positions.put(otherRobot, new boolean[]{areaA, areaB});		
+			this.positions.put(otherRobot, new boolean[]{areaA, areaB});
 	}
 
 	@Override

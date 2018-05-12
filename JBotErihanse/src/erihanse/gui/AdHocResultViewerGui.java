@@ -42,8 +42,9 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 	 */
 	protected JCheckBox monitorFitnessCheckBox;
 	protected boolean showFitnessMonitor;
-	private JTextField longestHomeRoute;
-	private JTextField longestSinkRoute;
+	protected JTextField longestHomeRoute;
+	protected JTextField longestSinkRoute;
+	protected JTextField totalDistanceTravelled;
 
 	public AdHocResultViewerGui(JBotSim jBotEvolver, Arguments args) {
 		super(jBotEvolver, args);
@@ -84,7 +85,7 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 	@Override
 	protected JPanel initRightWrapperPanel() {
 
-		int panelWidth = 250;
+		int panelWidth = 300;
 
 		JPanel sideTopPanel = new JPanel();
 		sideTopPanel.setLayout(new BoxLayout(sideTopPanel, BoxLayout.Y_AXIS));
@@ -144,7 +145,7 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 		}
 
 		// Status panel
-		JPanel statusPanel = new JPanel(new GridLayout(6, 2));
+		JPanel statusPanel = new JPanel(new GridLayout(7, 2));
 		statusPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		statusPanel.add(new JLabel("Control step: "));
@@ -176,8 +177,13 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 		longestSinkRoute = new JTextField("N/A");
 		statusPanel.add(longestSinkRoute);
 
+		statusPanel.add(new JLabel("Total distance travelled:"));
+		totalDistanceTravelled = new JTextField("N/A");
+		statusPanel.add(totalDistanceTravelled);
+
 		sideTopPanel.add(statusPanel);
-		statusPanel.setPreferredSize(new Dimension(panelWidth, 100));
+		// statusPanel.setPreferredSize(new Dimension(panelWidth, 200));
+		statusPanel.setPreferredSize(null);
 
 		JPanel sideWrapperPanel = new JPanel(new BorderLayout());
 		sideWrapperPanel.add(sideTopPanel, BorderLayout.NORTH);
@@ -194,6 +200,7 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 		super.update(simulator);
 		EAHSimpleArenaEnvironment eahenv = (EAHSimpleArenaEnvironment) simulator.getEnvironment();
 
+		// Retrieve longest routes from home and sink
 		LinkedList<? extends NetworkNode> longestHomeRoute = eahenv.getLongestRouteFromHome();
 		LinkedList<NetworkNode> longestSinkRoute = eahenv.getLongestRouteFromSink();
 		homeHopsTextField.setText(String.valueOf(longestHomeRoute.size()));
@@ -212,6 +219,9 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 			.collect(Collectors.joining("->"));
 		this.longestSinkRoute.setText(longestSinkRouteText);
 		this.longestSinkRoute.setToolTipText(longestSinkRouteText);
+
+		// Display the total distance the robots have travelled in total:
+		// double distanceTravelled =
 	}
 
 	@Override

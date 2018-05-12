@@ -1,7 +1,6 @@
-* don't move if part of longest solution
+Simple algorithm:
+    * don't move if part of longest solution
+    * move if all neighbours > 80 % of range
 
-* move if all neighbours > 80 % of range
-
-* rendre strek mellom ruta?
-
-* Fitness funksjon: hvor langt er man unna en løsning?
+Statistics:
+    * Create statistics. What is postevaluation for?

@@ -1,4 +1,4 @@
-package erihanse.commoninterface.robots;
+package erihanse.robot;
 
 import java.util.ArrayList;
 

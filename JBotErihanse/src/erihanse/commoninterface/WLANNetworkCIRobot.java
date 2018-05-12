@@ -14,5 +14,8 @@ public interface WLANNetworkCIRobot {
 	 * @return
 	 */
 	public int getNumberOfNeighbours();
+	/**
+	 * Retrieves signal strength of neighbour robots
+	 */
 	public double[] getNeighboursSignalStrength();
 }

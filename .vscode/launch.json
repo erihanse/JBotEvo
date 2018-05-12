@@ -1030,7 +1030,7 @@
             "type": "java",
             "name": "MainThymio<RaspberryController>",
             "request": "launch",
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/RaspberryController",
             "console": "internalConsole",
             "stopOnEntry": false,
             "mainClass": "main.MainThymio",

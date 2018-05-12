@@ -15,12 +15,10 @@ import simulation.robot.Robot;
 import simulation.util.Arguments;
 
 /**
- * Class MyEvaluationfunction Global
+ * Class MyEvaluationfunction (Global fitness function)
+ * Returns the nearest robot from sink that is part of the longest home route.
  */
 public class FullConnectionEvaluationFunction extends EvaluationFunction {
-	private double srcFactor = 0.1;
-	private double dstFactor = 0.3;
-	private double hopsFactor = 0.3;
 
 	public FullConnectionEvaluationFunction(Arguments args) {
 		super(args);
@@ -30,11 +28,7 @@ public class FullConnectionEvaluationFunction extends EvaluationFunction {
 	@Override
 	public void update(Simulator simulator) {
 		EAHSimpleArenaEnvironment eahenv = (EAHSimpleArenaEnvironment) simulator.getEnvironment();
-
 		NetworkNode closestRobot = getClosestNetworkNodeFromSink(simulator, eahenv);
-		// fitness =
-		// eahenv.getTargetNest().getPosition().distanceTo(closestRobot.getPosition());
-
 	}
 
 	private NetworkNode getClosestNetworkNodeFromSink(Simulator simulator, EAHSimpleArenaEnvironment eahenv) {
