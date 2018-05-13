@@ -13,9 +13,9 @@ import simulation.util.Arguments;
 public class RandomWalkController extends Controller {
 
     private double maxSpeed = 0.1;
-    private double leftSpeed;
-    private double rightSpeed;
 
+    private double lastLeft = 0;
+    private double lastRight = 0;
 
     // TODO: cheating
     Simulator simulator;
@@ -33,20 +33,36 @@ public class RandomWalkController extends Controller {
 
     @Override
     public void controlStep(double time) {
-        double multFactor = 10;
-        if (time % 100 == 0) {
-            Random random = simulator.getRandom();
+        int direction = simulator.getRandom().nextInt(4);
 
-            rightSpeed = (random.nextDouble() - 0.5) * 2;
-            leftSpeed = (random.nextDouble() - 0.5) * 2;
+        robot.setBodyColor(0, 0, 0);
+        if (time % 100 == 0) {
+
+            switch (direction) {
+            // forward
+            case 0:
+                lastLeft = 1.0;
+                lastRight = 1.0;
+                break;
+
+            // backward
+            case 1:
+                lastLeft = -1.0;
+                lastRight = -1.0;
+                break;
+            // left
+            case 2:
+                lastLeft = 0.5;
+                lastRight = 1.0;
+                break;
+            // right
+            case 3:
+                lastLeft = 1.0;
+                lastRight = 0.5;
+                break;
+            }
         }
 
-        ((DifferentialDriveRobot) robot).setWheelSpeed(leftSpeed * maxSpeed, rightSpeed * maxSpeed);
-        if (leftSpeed == 0.0 && rightSpeed == 0.0)
-            ((DifferentialDriveRobot) robot).setWheelSpeed(maxSpeed, maxSpeed * Math.min(.98, 1 - multFactor));
-        int sensorReading = (int) robot.getSensorByType(HomeRouteSensor.class).getSensorReading(999);
-        ((ODNetworkRobot) robot).setSourceHops(sensorReading);
-        // ((MyDifferentialDriveRobot) robot)
-        //         .setDestinationHops((int) robot.getSensorByType(DestinationHopsSensor.class).getSensorReading(999));
+        ((DifferentialDriveRobot) robot).setWheelSpeed(lastLeft * maxSpeed, lastRight * maxSpeed);
     }
 }
