@@ -26,7 +26,7 @@ public class Simulator implements Serializable {
 	protected FileProvider fileProvider = FileProvider.getDefaultFileProvider();
 	private int numberRobots = 0;
 	private int numberPhysicalObjects = 0;
-	private ArrayList<Updatable> callbacks = new ArrayList<Updatable>(); 
+	private ArrayList<Updatable> callbacks = new ArrayList<Updatable>();
 	private boolean stopSimulation = false;
 	private int[] robotIndexes;
 	private boolean setup = false;
@@ -36,7 +36,7 @@ public class Simulator implements Serializable {
 
 	private Network network;
 
-	private HashMap<String,Arguments> arguments = new HashMap<String,Arguments>(); 
+	private HashMap<String,Arguments> arguments = new HashMap<String,Arguments>();
 
 	public Simulator(Random random, HashMap<String,Arguments> arguments) {
 		this.random = random;
@@ -234,7 +234,7 @@ public class Simulator implements Serializable {
 				s.terminate(this);
 			}
 		}
-		
+
 		for(Robot r : this.environment.getRobots()){
 			if(r instanceof Stoppable){
 				((Stoppable) r).terminate(this);
@@ -332,7 +332,7 @@ public class Simulator implements Serializable {
 
 		public void run() {
 			for(int j = start ; j < end ; j++) {
-				Robot r = environment.getRobots().get(j); 
+				Robot r = environment.getRobots().get(j);
 				if(r.isEnabled()) {
 					r.updateSensors(time, environment.getTeleported());
 					r.getController().controlStep(time);
