@@ -27,11 +27,12 @@ public class ResultWriter implements Updatable, Stoppable {
 	@Override
 	public synchronized void terminate(Simulator simulator) {
         // TODO: Write travelled distance
-        ArrayList<ODNetworkRobot> odRobots = ((EAHSimpleArenaEnvironment) simulator.getEnvironment()).getODRobots();
-        HashMap<String, Arguments> args = simulator.getArguments();
+        // ArrayList<ODNetworkRobot> odRobots = ((EAHSimpleArenaEnvironment) simulator.getEnvironment()).getODRobots();
+        // HashMap<String, Arguments> args = simulator.getArguments();
+        EAHSimpleArenaEnvironment eahenv = (EAHSimpleArenaEnvironment) simulator.getEnvironment();
         try {
             FileWriter fw = new FileWriter(new File(filename), true);
-            fw.write(simulator.getTime() + "\n");
+            fw.write(String.format("%s %s\n", simulator.getTime(), eahenv.getTotalDistanceTravelled()));
             fw.close();
 
         } catch (IOException e) {

@@ -48,7 +48,6 @@ public class StopIfnNeighboursController extends Controller {
         this.odRobot = (ODNetworkRobot) robot;
 
         homeSensor = (HomeRouteSensor) robot.getSensorByType(HomeRouteSensor.class);
-
     }
 
     @Override

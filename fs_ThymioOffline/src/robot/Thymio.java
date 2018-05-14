@@ -142,7 +142,7 @@ public class Thymio extends DifferentialDriveRobot implements ThymioCI, Stoppabl
 		if(stopActuator)
 			actuators.add(new StopActuator(simulator, actuators.size() + 1, null));
 
-		this.startLogger(args.getArgumentAsStringOrSetDefault("out", ""));
+		// this.startLogger(args.getArgumentAsStringOrSetDefault("out", ""));
 		//setStatus("Running!\n");
 		if(logger != null)
 			logger.logMessage(LogCodex.encodeLog(LogType.MESSAGE, "Running!\n"));
