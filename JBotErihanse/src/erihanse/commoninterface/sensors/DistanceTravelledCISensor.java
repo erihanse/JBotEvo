@@ -3,15 +3,19 @@ package erihanse.commoninterface.sensors;
 import commoninterface.CISensor;
 import commoninterface.RobotCI;
 import commoninterface.utils.CIArguments;
+import erihanse.robot.ODNetworkRobot;
 
 /**
  * DistanceTravelledCISensor
  */
-public abstract class DistanceTravelledCISensor extends CISensor {
-    protected double distanceTravelled = 0;
+public class DistanceTravelledCISensor extends CISensor {
+	protected double distanceTravelled = 0;
+	// TODO: This is wrong?
+    ODNetworkRobot odRobot;
 
 	public DistanceTravelledCISensor(int id, RobotCI robot, CIArguments args) {
-        super(id, robot, args);
+		super(id, robot, args);
+		odRobot = (ODNetworkRobot) robot;
 	}
 
 	@Override
@@ -25,7 +29,7 @@ public abstract class DistanceTravelledCISensor extends CISensor {
 	}
 
 	@Override
-	public abstract void update(double time, Object[] entities);
-
-
+    public void update(double time, Object[] entities) {
+        distanceTravelled += odRobot.getPosition().distanceTo(odRobot.getPreviousPosition());
+    }
 }

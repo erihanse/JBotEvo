@@ -3,7 +3,9 @@ package erihanse.environment;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.stream.Collectors;
 
+import erihanse.commoninterface.sensors.DistanceTravelledCISensor;
 import erihanse.network.NetworkNode;
 import erihanse.physicalobjects.HomeNest;
 import erihanse.physicalobjects.TargetNest;
@@ -12,7 +14,6 @@ import mathutils.Vector2d;
 import simulation.Simulator;
 import simulation.environment.Environment;
 import simulation.physicalobjects.Nest;
-import simulation.physicalobjects.PhysicalObject;
 import simulation.physicalobjects.PhysicalObjectType;
 import simulation.physicalobjects.Wall;
 import simulation.robot.Robot;
@@ -26,8 +27,10 @@ public class EAHSimpleArenaEnvironment extends Environment {
 	private static final long serialVersionUID = 1L;
 	protected double wallThickness = 0.1;
 	protected double randomizeOrientationValue = 6.28;
-	private TargetNest targetNest;
-	private HomeNest homeNest;
+	protected TargetNest targetNest;
+	protected HomeNest homeNest;
+	protected double totalDistanceTravelled;
+	protected boolean distanceSensor;
 
 	public EAHSimpleArenaEnvironment(Simulator simulator, Arguments args) {
 		super(simulator, args);
@@ -190,5 +193,18 @@ public class EAHSimpleArenaEnvironment extends Environment {
 			}
 		}
 		return longestRoute;
+	}
+
+	public double getTotalDistanceTravelled() {
+		// If all robots have the distance travelled sensor
+		if (getODRobots().stream().allMatch(s -> s.getCISensorByType(DistanceTravelledCISensor.class) != null)) {
+			// Sum the sensor readings of the distances travelled
+			return getODRobots()
+				.stream()
+				.map(s -> s.getCISensorByType(DistanceTravelledCISensor.class).getSensorReading(0))
+				.collect(Collectors.summingDouble(Double::doubleValue));
+		} else {
+			return 0;
+		}
 	}
 }

@@ -14,7 +14,6 @@ import simulation.util.Arguments;
  * time it takes before we have established a connection between both endpoints.
  */
 public class FullConnectionTimerEvaluationFunction extends EvaluationFunction {
-    private String outputfilename = "fitnessvalues.txt";
 
     public FullConnectionTimerEvaluationFunction(Arguments args) {
         super(args);
@@ -34,18 +33,8 @@ public class FullConnectionTimerEvaluationFunction extends EvaluationFunction {
         }
     }
 
-    private synchronized void simulationDone(Simulator simulator) {
+    private void simulationDone(Simulator simulator) {
         simulator.stopSimulation();
-        System.out.println("FITNESS: " + fitness + "!!!");
-
-        try {
-            FileWriter fw = new FileWriter(new File(outputfilename), true);
-            fw.write(fitness + "\n");
-            fw.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**

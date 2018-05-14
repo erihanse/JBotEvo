@@ -6,10 +6,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -24,8 +22,6 @@ import erihanse.network.NetworkNode;
 import gui.ResultViewerGui;
 import simulation.JBotSim;
 import simulation.Simulator;
-import simulation.physicalobjects.PhysicalObject;
-import simulation.robot.Robot;
 import simulation.util.Arguments;
 import updatables.BlenderExport;
 
@@ -221,7 +217,8 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 		this.longestSinkRoute.setToolTipText(longestSinkRouteText);
 
 		// Display the total distance the robots have travelled in total:
-		// double distanceTravelled =
+		double distanceTravelled = eahenv.getTotalDistanceTravelled();
+		this.totalDistanceTravelled.setText(String.valueOf(distanceTravelled));
 	}
 
 	@Override

@@ -2,7 +2,7 @@ package erihanse.robot;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-
+import commoninterface.CISensor;
 import commoninterface.neat.utils.MathUtils;
 import erihanse.commoninterface.WLANNetworkCIRobot;
 import erihanse.commoninterface.sensors.DistanceTravelledSimSensor;
@@ -12,6 +12,7 @@ import erihanse.network.NetworkNode;
 import erihanse.physicalobjects.HomeNest;
 import erihanse.physicalobjects.TargetNest;
 import robot.Thymio;
+import sensors.CISensorWrapper;
 import simulation.Simulator;
 import simulation.physicalobjects.PhysicalObject;
 import simulation.robot.Robot;
@@ -238,5 +239,17 @@ public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI
 
 	@Override
 	public void shutdown() {
+
+	}
+
+	public CISensor getCISensorByType(Class sensorClass) {
+		return sensors
+			.stream()
+			.filter(CISensorWrapper.class::isInstance)
+			.map(CISensorWrapper.class::cast)
+			.map(s -> s.getCisensor())
+			.filter(sensorClass::isInstance)
+			.findFirst()
+			.orElse(null);
 	}
 }

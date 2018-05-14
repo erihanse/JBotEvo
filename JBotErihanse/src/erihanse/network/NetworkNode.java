@@ -27,5 +27,8 @@ import simulation.physicalobjects.PhysicalObject;
         return null;
     };
 
+    /**
+     * TODO: We should rather use ThymioCI.getVirtualPosition
+     */
     public Vector2d getPosition();
 }
