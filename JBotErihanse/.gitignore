@@ -4,3 +4,5 @@
 _thymio_online_homing_wo_macro_autom/
 /output-*/
 /confs/output-*/
+/graphviz/*
+/lib/gs-*/

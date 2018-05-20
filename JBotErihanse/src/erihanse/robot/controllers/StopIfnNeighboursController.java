@@ -70,7 +70,7 @@ public class StopIfnNeighboursController extends Controller {
         // Don't move if part of longest solution TODO: Buuut maybe move if you're close
         // to the others in the route.
         if (partOfLongestHomeRoute()) {
-            if (inOptimalRange()) {
+            if (inOptimalRangeOfClosestNeighbours()) {
                 robot.stop();
                 robot.setBodyColor(1, 0, 0);
                 return;
@@ -124,12 +124,12 @@ public class StopIfnNeighboursController extends Controller {
         ((ODNetworkRobot) robot).setSourceHops(sensorReading);
     }
 
-    private boolean inOptimalRange() {
+    private boolean inOptimalRangeOfClosestNeighbours() {
         Vector2d robpos = odRobot.getPosition();
         return eahenv.getLongestRouteFromHome()
             .stream()
             // Filter out those not in range
-            .filter(homeRouteRobot -> odRobot.robotsInRange().contains(homeRouteRobot))
+            .filter(homeRouteRobot -> odRobot.getNeighbourRobots().contains(homeRouteRobot))
             // Get the positions of neighbouring robots
             .map(homeRouteRobot -> ((ODNetworkRobot) homeRouteRobot).getPosition())
             // Distances must be within interval

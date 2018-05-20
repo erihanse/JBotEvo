@@ -1,23 +1,19 @@
 package erihanse.robot.controllers;
 
-import java.util.Random;
 
 import controllers.Controller;
-import erihanse.robot.sensors.HomeRouteSensor;
 import erihanse.robot.ODNetworkRobot;
+import erihanse.robot.sensors.HomeRouteSensor;
 import simulation.Simulator;
-import simulation.robot.DifferentialDriveRobot;
 import simulation.robot.Robot;
 import simulation.util.Arguments;
 
 public class RandomWalkController extends Controller {
 
     private double maxSpeed = 0.1;
-
     private double lastLeft = 0;
     private double lastRight = 0;
 
-    // TODO: cheating
     Simulator simulator;
     HomeRouteSensor homeSensor;
 
@@ -62,7 +58,6 @@ public class RandomWalkController extends Controller {
                 break;
             }
         }
-
-        ((DifferentialDriveRobot) robot).setWheelSpeed(lastLeft * maxSpeed, lastRight * maxSpeed);
+        ((ODNetworkRobot) robot).setWheelSpeed(lastLeft * maxSpeed, lastRight * maxSpeed);
     }
 }

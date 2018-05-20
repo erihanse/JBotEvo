@@ -22,7 +22,7 @@ import simulation.physicalobjects.PhysicalObject;
 
     public int getId();
 
-    public default ArrayList<ODNetworkRobot> robotsInRange() {
+    public default ArrayList<ODNetworkRobot> getNeighbourRobots() {
         // TODO: Implement
         return null;
     };

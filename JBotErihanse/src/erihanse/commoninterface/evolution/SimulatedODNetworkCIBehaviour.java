@@ -1,5 +1,7 @@
 package erihanse.commoninterface.evolution;
 
+import java.awt.Color;
+
 import commoninterface.RobotCI;
 import commoninterface.evolution.SimulatedThymioOnlineEvoControllerCIBehaviour;
 import commoninterface.evolution.odneat.eval.CIODNEATEvaluationFunction;
@@ -9,8 +11,7 @@ import commoninterface.evolution.odneat.eval.CIOnlineHomingEvaluationFunction;
 import commoninterface.evolution.odneat.eval.CIOnlineNavigationEvaluationFunction;
 import commoninterface.utils.CIArguments;
 import erihanse.commoninterface.evaluationfunctions.CIConnectivityEvaluationFunction;
-import erihanse.commoninterface.evaluationfunctions.CISourceHopsEvaluationFunction;
-import erihanse.evaluationfunction.SourceHopsEvaluationFunction;
+import erihanse.robot.ODNetworkRobot;
 
 /**
  * SimulatedODNetworkCIBehaviour
@@ -18,21 +19,20 @@ import erihanse.evaluationfunction.SourceHopsEvaluationFunction;
 public class SimulatedODNetworkCIBehaviour extends SimulatedThymioOnlineEvoControllerCIBehaviour {
     public SimulatedODNetworkCIBehaviour(CIArguments args, RobotCI robot) {
         super(args, robot);
+        maturationperiod = Integer.parseInt(new CIArguments(args.getArgumentAsString("evaluation")).getArgumentAsStringOrSetDefault("maturationperiod", "500"));
     }
 
     @Override
     protected CIODNEATEvaluationFunction loadCIODNEATEvaluationFunction(CIArguments ciArguments) {
-        //	System.out.println("task: " + ciArguments.getArgumentAsString("taskname").equalsIgnoreCase("navigation-obstacle"));
-        if (ciArguments.getArgumentAsString("taskname").equalsIgnoreCase("navigation-obstacle"))
-            return new CIOnlineNavigationEvaluationFunction(ciArguments);
-        else if (ciArguments.getArgumentAsString("taskname").equalsIgnoreCase("homing"))
-            return new CIOnlineHomingEvaluationFunction(ciArguments);
-        else if (ciArguments.getArgumentAsString("taskname").equalsIgnoreCase("aggregation"))
-            return new CIOnlineAggregationEvaluationFunction(ciArguments);
-        else if (ciArguments.getArgumentAsString("taskname").equalsIgnoreCase("centeraggregation"))
-            return new CIOnlineCenterAggregationEvaluationFunction(ciArguments);
-        else if (ciArguments.getArgumentAsString("taskname").equalsIgnoreCase("connectivity"))
+        if (ciArguments.getArgumentAsString("taskname").equalsIgnoreCase("connectivity"))
             return new CIConnectivityEvaluationFunction(ciArguments);
-        return null;
+        else return super.loadCIODNEATEvaluationFunction(ciArguments);
     }
+
+    public void updateStructure(Object object) {
+        super.updateStructure(object);
+        ODNetworkRobot odRobot = (ODNetworkRobot) robot;
+        // This gives a flashing behaviour when the robot changes controller
+        odRobot.setBodyColor(Color.MAGENTA);
+	}
 }
