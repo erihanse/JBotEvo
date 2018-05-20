@@ -17,8 +17,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import erihanse.controllers.SimulatedThymioODNetworkController;
 import erihanse.environment.EAHSimpleArenaEnvironment;
 import erihanse.network.NetworkNode;
+import erihanse.robot.ODNetworkRobot;
 import gui.ResultViewerGui;
 import simulation.JBotSim;
 import simulation.Simulator;
@@ -41,6 +43,8 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 	protected JTextField longestHomeRoute;
 	protected JTextField longestSinkRoute;
 	protected JTextField totalDistanceTravelled;
+
+	protected CINetworkGraphViz graphViz2;
 
 	public AdHocResultViewerGui(JBotSim jBotEvolver, Arguments args) {
 		super(jBotEvolver, args);
@@ -231,5 +235,38 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 				showFitnessMonitor = check.isSelected();
 			}
 		});
+	}
+
+	@Override
+	protected void displayNeuralNetwork() {
+		if (showNeuralNetwork && graphViz2 == null) {
+			ODNetworkRobot odRobot = (ODNetworkRobot) simulator.getEnvironment().getRobots().get(0);
+			SimulatedThymioODNetworkController cont = (SimulatedThymioODNetworkController) odRobot.getController();
+			graphViz2 = new CINetworkGraphViz(cont.getCIController().getNetwork());
+		}
+		if (showNeuralNetwork)
+			graphViz2.show();
+	}
+
+	@Override
+	protected void updateNeuralNetworkDisplay() {
+		/**
+		 * Unfortunately, the way it is now, the neural network is buffered to disk,
+		 * meaning the simulation will lag quite a bit. A workaround is to not display
+		 * the neural networks for each time frame. That will however make the activations on
+		 * each node quite quickly become obsolete.
+		 */
+		if (simulator.getTime() % 100 == 0) {
+			if (showNeuralNetwork) {
+				ODNetworkRobot odRobot = (ODNetworkRobot) simulator.getEnvironment().getRobots().get(0);
+				SimulatedThymioODNetworkController cont = (SimulatedThymioODNetworkController) odRobot.getController();
+				if (graphViz2 != null) {
+					graphViz2.changeNeuralNetwork(cont.getCIController().getNetwork());
+
+				} else {
+					graphViz2 = new CINetworkGraphViz(cont.getCIController().getNetwork());
+				}
+			}
+		}
 	}
 }

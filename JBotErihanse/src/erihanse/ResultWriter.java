@@ -14,33 +14,33 @@ import simulation.Updatable;
 import simulation.util.Arguments;
 
 /**
- * ResultWriter
- *  Writes how long the experiment took to file indicated by arguments["filename"],
- *  or "outputfile.txt" if none specified.
+ * ResultWriter Writes how long the experiment took to file indicated by
+ * arguments["filename"], or "outputfile.txt" if none specified.
  */
 public class ResultWriter implements Updatable, Stoppable {
     String filename;
+    Arguments arguments;
+
     public ResultWriter(Arguments arguments) {
         filename = arguments.getArgumentAsStringOrSetDefault("filename", "outputfile.txt");
+        this.arguments = arguments;
     }
 
-	@Override
-	public synchronized void terminate(Simulator simulator) {
-        // TODO: Write travelled distance
-        // ArrayList<ODNetworkRobot> odRobots = ((EAHSimpleArenaEnvironment) simulator.getEnvironment()).getODRobots();
-        // HashMap<String, Arguments> args = simulator.getArguments();
+    @Override
+    public synchronized void terminate(Simulator simulator) {
         EAHSimpleArenaEnvironment eahenv = (EAHSimpleArenaEnvironment) simulator.getEnvironment();
         try {
-            FileWriter fw = new FileWriter(new File(filename), true);
+            String outputFolder = simulator.getArguments().get("--output").getCompleteArgumentString();
+            FileWriter fw = new FileWriter(new File(outputFolder + "/../../" + filename), true);
             fw.write(String.format("%s %s\n", simulator.getTime(), eahenv.getTotalDistanceTravelled()));
             fw.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-	}
+    }
 
-	@Override
-	public void update(Simulator simulator) { }
+    @Override
+    public void update(Simulator simulator) {
+    }
 
 }

@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class StandardGenome implements ODNEATGenome {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	protected String id;
@@ -20,12 +20,12 @@ public class StandardGenome implements ODNEATGenome {
 
 	protected ArrayList<ODNEATLinkGene> linkGenes;
 	protected ArrayList<ODNEATNodeGene> nodeGenes;
-	
+
 	//odneat
 	protected String eaInstance = "o";
 	protected int age = 0;
 	protected double saTime = 1;
-	
+
 	protected HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
 
 	protected StandardGenome(){
@@ -134,7 +134,10 @@ public class StandardGenome implements ODNEATGenome {
 	public void setId(String newId){
 		this.id = newId;
 	}
-	
+
+	/*
+	 * EAH change
+	*/
 	public String toString(String separator){
 		StringBuffer b = new StringBuffer();
 		//links
@@ -146,17 +149,21 @@ public class StandardGenome implements ODNEATGenome {
 	protected boolean selfRecurrent = false, recurrent = false, enabled = true;
 		 */
 		for(ODNEATLinkGene link : this.linkGenes){
+			b.append("\nLink:\n");
 			b.append(link.getFromId() + separator + link.getToId() + separator + link.getWeight() + separator + link.getInnovationNumber()
 					+ separator + (link.enabled == true ? 1 : 0 ) + separator + (link.selfRecurrent == true ? 1 : 0) + separator + (link.recurrent == true ? 1 : 0) + separator);
 		}
 		//nodes
+		b.append("\n");
 		b.append(this.nodeGenes.size());
 		b.append(separator);
 
 		for(ODNEATNodeGene node : this.nodeGenes){
+			b.append("\nGene:\n");
 			b.append(node.innovationNumber + separator + node.type + separator + node.bias + separator);
 		}
-		
+
+		b.append("\nStats:\n");
 		b.append(id + separator + fitness + separator + adjustedFitness + separator + energyLevel + separator + speciesId + separator + updatesCount
 				+ separator + eaInstance + separator + age + separator + saTime);
 
@@ -181,9 +188,9 @@ public class StandardGenome implements ODNEATGenome {
 		copy.updatesCount = updatesCount;
 		copy.eaInstance = new String(eaInstance);
 		copy.age = this.age;
-		
+
 		copy.saTime = this.saTime;
-		
+
 		if(this.map != null){
 			copy.map = new HashMap<Integer, Integer>();
 			for(Integer key : this.map.keySet()){
@@ -322,7 +329,7 @@ public class StandardGenome implements ODNEATGenome {
 	public int getGenomeAge() {
 		return this.age;
 	}
-	
+
 	public void setAge(int newAge){
 		this.age = newAge;
 	}
@@ -351,6 +358,6 @@ public class StandardGenome implements ODNEATGenome {
 	public HashMap<Integer, Integer> getBDMap() {
 		return map;
 	}
-	
-	
+
+
 }

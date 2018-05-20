@@ -24,15 +24,15 @@ public class MacroNetwork extends CINeuralNetwork implements Serializable{
 	private NeuralNetLayer[] layers;
 	//macro neuron to list of neurons that compose it
 	private HashMap<Long, ArrayList<Neuron>> macroMap = new HashMap<Long, ArrayList<Neuron>>();
-	
+
 	//TODO: improve
 	//(macro-neurons composing) neuron to id to previous activation value
-	private HashMap<Long, Double> previousActivations = new HashMap<Long, Double>();	
+	private HashMap<Long, Double> previousActivations = new HashMap<Long, Double>();
 	private double[] previousOutputs = new double[2];
-	
+
 	//macro-neuron to variations (of the macro-neuron, of the net)
 	private HashMap<Long,ODNEATMacroNodeGene> idToGene = new HashMap<Long,ODNEATMacroNodeGene>();
-	
+
 	public MacroNetwork(Vector<CINNInput> inputs, Vector<CINNOutput> outputs, CIArguments arguments){
 		this.create(inputs, outputs);
 	}
@@ -72,7 +72,7 @@ public class MacroNetwork extends CINeuralNetwork implements Serializable{
 				variation += magnitudeChange;
 			}
 			variation /= innerNeurons.size();
-			
+
 			idToGene.get(macroNeuronId).registerVariation(new double[]{variation,outputVariation});
 		}
 		previousOutputs = outputValues.clone();
@@ -95,14 +95,14 @@ public class MacroNetwork extends CINeuralNetwork implements Serializable{
 
 	public void updateStructure(MacroNetwork newStructure) {
 		this.layers = newStructure.layers;
-		
+
 		//maps
 		this.macroMap = newStructure.macroMap;
 		this.previousActivations = newStructure.previousActivations;
 		this.previousOutputs = newStructure.previousOutputs;
 		this.idToGene = newStructure.idToGene;
 	}
-	
+
 	public HashMap<Long, Neuron> getNeuronMap(){
 		HashMap<Long,Neuron> map = new HashMap<Long,Neuron>();
 		for(NeuralNetLayer l : this.layers){
@@ -111,7 +111,7 @@ public class MacroNetwork extends CINeuralNetwork implements Serializable{
 				map.put(n.getInnovationNumber(), n);
 			}
 		}
-		
+
 		return map;
 	}
 
@@ -163,6 +163,13 @@ public class MacroNetwork extends CINeuralNetwork implements Serializable{
 		return links;
 	}
 
+	/*
+	 * EAH change
+	 */
+	public NeuralNetLayer[] getLayers() {
+		return layers;
+	}
+
 	public void registerMacroNeuron(Long macroId,
 			ArrayList<Long> macroOutputs, ODNEATMacroNodeGene macroGene) {
 		ArrayList<Neuron> macroOut = new ArrayList<Neuron>();
@@ -173,7 +180,7 @@ public class MacroNetwork extends CINeuralNetwork implements Serializable{
 		}
 		this.idToGene.put(macroId, macroGene);
 
-		
+
 		this.macroMap.put(macroId, macroOut);
 	}
 

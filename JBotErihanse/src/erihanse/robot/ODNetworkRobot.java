@@ -83,7 +83,7 @@ public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI
 		return targetRoute;
 	}
 
-	public ArrayList<ODNetworkRobot> robotsInRange() {
+	public ArrayList<ODNetworkRobot> getNeighbourRobots() {
 		ArrayList<ODNetworkRobot> inRangeRobots = new ArrayList<>();
 		for (Robot r : env.getRobots()) {
 			if (MyMathUtils.inRange(this, r, range)) {
@@ -117,7 +117,7 @@ public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI
 		int shortestRouteSize = Integer.MAX_VALUE;
 
 		// Retrieve neighbouring nodes' routes
-		for (Robot neighbourRobot : robotsInRange()) {
+		for (Robot neighbourRobot : getNeighbourRobots()) {
 			ODNetworkRobot mr = (ODNetworkRobot) neighbourRobot;
 
 			// Skip ourself
@@ -174,7 +174,7 @@ public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI
 		int shortestRouteSize = Integer.MAX_VALUE;
 
 		// Retrieve neighbouring nodes' routes
-		for (Robot neighbourRobot : robotsInRange()) {
+		for (Robot neighbourRobot : getNeighbourRobots()) {
 			ODNetworkRobot mr = (ODNetworkRobot) neighbourRobot;
 
 			// Skip ourself
@@ -222,12 +222,12 @@ public class ODNetworkRobot extends Thymio implements NetworkNode, WLANNetworkCI
 
 	@Override
 	public int getNumberOfNeighbours() {
-		return robotsInRange().size();
+		return getNeighbourRobots().size();
 	}
 
 	@Override
 	public double[] getNeighboursSignalStrength() {
-		return robotsInRange().stream()
+		return getNeighbourRobots().stream()
 			.mapToDouble(n -> this.getPosition().distanceTo(n.getPosition()))
 			.toArray();
 	}
