@@ -223,26 +223,5 @@ public class AdHocNetworkRenderer extends TwoDRendererDebug {
 
     public void mouseReleased(MouseEvent e) {
         super.mouseReleased(e);
-        if (e.getButton() == MouseEvent.BUTTON1) {
-            endWallPosition = new Vector2d(e.getX(), e.getY());
-
-            EAHSimpleArenaEnvironment env = (EAHSimpleArenaEnvironment) simulator.getEnvironment();
-            double wallThickness = env.getWallThickness();
-            // Wall v = env.createWall(simulator, startWallPosition, endWallPosition, 50);
-
-            System.out.println(env.getAllObjects().get(3));
-            for (PhysicalObject po : env.getAllObjects()) {
-                if (po instanceof Wall) {
-                    System.out.println(po);
-                }
-            }
-
-            repaint();
-
-            // graphics.drawPolyline(xpoints.stream().mapToInt(Integer::valueOf).toArray(),
-            // ypoints.stream().mapToInt(Integer::valueOf).toArray(), xpoints.size());
-            // drawMarker(graphics, new Marker(simulator, "name", 1, -1, -1, 0, 1,
-            // Color.cyan));
-        }
     }
 }

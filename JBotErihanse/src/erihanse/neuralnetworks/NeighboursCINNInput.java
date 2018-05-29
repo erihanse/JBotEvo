@@ -33,7 +33,7 @@ public class NeighboursCINNInput extends CINNInput {
 	}
 
 	double sensorToInput(double value, int sensorNumber) {
-		// TODO:
+		// TODO: Hmmm...
 
 		//normalise
 		double normalised  = value / cutoff;
@@ -41,33 +41,5 @@ public class NeighboursCINNInput extends CINNInput {
 			normalised = limit;
 
 		return normalised;
-
-		//OLD (TIAGO)
-		/*if (value > sensorAverages[sensorAverages.length - 1]) {
-
-			int i;
-			for (i = 0; i < sensorAverages.length; i++) {
-				if (value > sensorAverages[i]) {
-					if (i == 0)
-						return 1.0;
-
-					double referenceBefore = sensorAverages[i - 1];
-					double referenceAfter = sensorAverages[i];
-
-					double linearization = (value - referenceAfter) / (referenceBefore - referenceAfter);
-
-					double distanceAfter = distances[i];
-					double distanceBefore = distances[i - 1];
-					double currentDistance = (distanceBefore - distanceAfter) * (linearization) + distanceAfter;
-
-					double currentValue = 1.0 - currentDistance / distances[sensorAverages.length - 1];
-					currentValue = Math.min(currentValue, 1);
-
-					return currentValue;
-				}
-			}
-		}
-		return 0.0;*/
 	}
-
 }

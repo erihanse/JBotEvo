@@ -15,7 +15,7 @@ import simulation.robot.Robot;
 import simulation.util.Arguments;
 import simulation.util.ArgumentsAnnotation;
 
-public class StopIfnNeighboursController extends Controller {
+public class LongestHomerouteController extends Controller {
 
     private double maxSpeed = 0.1;
     private double timeToStartAgain;
@@ -34,7 +34,7 @@ public class StopIfnNeighboursController extends Controller {
 
     ODNetworkRobot odRobot;
 
-    public StopIfnNeighboursController(Simulator simulator, Robot robot, Arguments args) {
+    public LongestHomerouteController(Simulator simulator, Robot robot, Arguments args) {
         super(simulator, robot, args);
         if (args.getArgumentIsDefined("actuators")) {
             Arguments actuators = new Arguments(args.getArgumentAsString("actuators"));
@@ -133,7 +133,7 @@ public class StopIfnNeighboursController extends Controller {
             // Get the positions of neighbouring robots
             .map(homeRouteRobot -> ((ODNetworkRobot) homeRouteRobot).getPosition())
             // Distances must be within interval
-            .allMatch(s -> robpos.distanceTo(s) > 0.7 && robpos.distanceTo(s) < 0.9);
+            .allMatch(s -> robpos.distanceTo(s) > 0.7);
     }
 
     private boolean partOfLongestHomeRoute() {

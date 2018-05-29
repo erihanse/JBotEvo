@@ -12,7 +12,7 @@ import commoninterface.utils.CIArguments;
 import erihanse.commoninterface.WLANNetworkCIRobot;
 
 public class WLANScanCISensor extends CISensor {
-	final private int numberOfNeighboursToCompare = 5;
+	final private int numberOfNeighboursToCompare = 3;
 	private double[] readings;
 
 	protected WLANNetworkCIRobot networkRobot;
@@ -21,19 +21,18 @@ public class WLANScanCISensor extends CISensor {
 		super(id, robot, args);
 		networkRobot = (WLANNetworkCIRobot) robot;
 		readings = new double[getNumberOfSensors()];
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public int getNumberOfSensors() {
-		return numberOfNeighboursToCompare;
+		return numberOfNeighboursToCompare + 1;
 	}
 
 	@Override
 	/**
-	 * readings[0]: n neighbours
+	 * readings[0]: n neighbours in range
 	 *
-	 * readings[1-4]: signal strength of 4 nearest neighbours
+	 * readings[1-3] signal strength of 4 nearest neighbours
 	 */
 	public double getSensorReading(int sensorNumber) {
 		return readings[sensorNumber];
@@ -42,7 +41,6 @@ public class WLANScanCISensor extends CISensor {
 	@Override
 	public void update(double time, Object[] entities) {
 		// Zero out readings
-		readings = new double[getNumberOfSensors()];
 		// readings[0]: nNeighbours
 		readings[0] = (long) networkRobot.getNumberOfNeighbours();
 		// readings[1-4]: signal strength of neighbours.
