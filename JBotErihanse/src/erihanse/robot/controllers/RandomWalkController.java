@@ -10,7 +10,7 @@ import simulation.util.Arguments;
 
 public class RandomWalkController extends Controller {
 
-    private double maxSpeed = 0.1;
+    private double maxSpeed = 0.2;
     private double lastLeft = 0;
     private double lastRight = 0;
 

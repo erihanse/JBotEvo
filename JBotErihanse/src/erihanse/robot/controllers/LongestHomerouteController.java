@@ -17,13 +17,14 @@ import simulation.util.ArgumentsAnnotation;
 
 public class LongestHomerouteController extends Controller {
 
-    private double maxSpeed = 0.1;
+    private double maxSpeed = 0.2;
     private double timeToStartAgain;
 
     double lastLeft = 0;
     double lastRight = 0;
 
-    @ArgumentsAnnotation(name = "N neighbours to stop on", defaultValue = "4")
+    // Not used in current version
+    @ArgumentsAnnotation(name = "N neighbours to stop on (deprecated)", defaultValue = "4")
     private int nNeighboursToStop;
     @ArgumentsAnnotation(name = "Frames to sleep when stopping", defaultValue = "0")
     private double stopTime;
@@ -67,8 +68,7 @@ public class LongestHomerouteController extends Controller {
             return;
         }
 
-        // Don't move if part of longest solution TODO: Buuut maybe move if you're close
-        // to the others in the route.
+        // Don't move if part of longest solution to the others in the route.
         if (partOfLongestHomeRoute()) {
             if (inOptimalRangeOfClosestNeighbours()) {
                 robot.stop();

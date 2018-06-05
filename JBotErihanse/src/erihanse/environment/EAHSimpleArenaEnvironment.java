@@ -69,10 +69,6 @@ public class EAHSimpleArenaEnvironment extends Environment {
 		return targetNest;
 	}
 
-	public void placeNest(Simulator simulator) {
-		this.addObject(new Nest(simulator, "Yolo", 0, 0, 1));
-	}
-
 	protected void setupWalls(Simulator simulator) {
 		createHorizontalWalls(simulator);
 		createVerticalWalls(simulator);
@@ -89,17 +85,7 @@ public class EAHSimpleArenaEnvironment extends Environment {
 		double maxDisperseValue = (homeNest.getRadius() - wallThickness) / Math.sqrt(2);
 		for (int i = 0; i < robots.size(); i++) {
 			Robot r = robots.get(i);
-			// Vector2d randomPosition = generateRandomPosition(simulator, this.width -
-			// (wallThickness + r.getRadius()),
-			// this.height - (wallThickness + r.getRadius()));
-			// r.teleportTo(randomPosition);
-
 			Vector2d distributionPoint = homeNest.getPosition();
-			// double x = random.nextDouble() + sourcepos.x + (wallThickness / 2);
-			// double y = random.nextDouble() + sourcepos.y + (wallThickness / 2);
-
-			//
-			// sourcepos = new Vector2d(0, 0);
 
 			double x = distributionPoint.x + (random.nextDouble() * maxDisperseValue + wallThickness + 0.5);
 			double y = distributionPoint.y + (random.nextDouble() * maxDisperseValue + wallThickness + 0.5);
@@ -109,9 +95,6 @@ public class EAHSimpleArenaEnvironment extends Environment {
 			double orientation = r.getOrientation() + (random.nextDouble() * 2 - 1) * this.randomizeOrientationValue;
 			r.setOrientation(orientation);
 		}
-		// robots.get(0).teleportTo(new Vector2d(-1.7, -1.7));
-		// robots.get(1).teleportTo(new Vector2d(-1, -1));
-		// robots.get(2).teleportTo(new Vector2d(-0.5, -0.5));
 	}
 
 	protected Vector2d generateRandomPosition(Simulator simulator, double width, double height) {
@@ -146,10 +129,6 @@ public class EAHSimpleArenaEnvironment extends Environment {
 	private void createVerticalWalls(Simulator simulator) {
 		createWall(simulator, -this.width / 2 - wallThickness / 2, 0, wallThickness, height + wallThickness);
 		createWall(simulator, width / 2 + wallThickness / 2, 0, wallThickness, height + wallThickness);
-	}
-
-	private void generateRandomWalls(Simulator simulator) {
-		// TODO: Implement
 	}
 
 	public double getWallThickness() {

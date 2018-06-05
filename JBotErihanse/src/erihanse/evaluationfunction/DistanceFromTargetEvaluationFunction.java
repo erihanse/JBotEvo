@@ -20,7 +20,6 @@ public class DistanceFromTargetEvaluationFunction extends EvaluationFunction {
 
     @Override
     public void update(Simulator simulator) {
-        // TODO: Implement
         ArrayList<Robot> robots = simulator.getEnvironment().getRobots();
         double distances[] = new double[robots.size()];
         int i = 0;

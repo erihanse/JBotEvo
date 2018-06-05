@@ -10,7 +10,6 @@ import erihanse.robot.ODNetworkRobot;
  */
 public class DistanceTravelledCISensor extends CISensor {
 	protected double distanceTravelled = 0;
-	// TODO: This is wrong?
     ODNetworkRobot odRobot;
 
 	public DistanceTravelledCISensor(int id, RobotCI robot, CIArguments args) {

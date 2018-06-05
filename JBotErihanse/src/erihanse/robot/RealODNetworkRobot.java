@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import commoninterfaceimpl.RealThymioCI;
 import erihanse.commoninterface.WLANNetworkCIRobot;
 
+/**
+ * Future work
+ */
 public class RealODNetworkRobot extends RealThymioCI implements WLANNetworkCIRobot {
 
 	public RealODNetworkRobot() {
