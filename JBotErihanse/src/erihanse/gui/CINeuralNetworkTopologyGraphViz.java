@@ -50,6 +50,7 @@ import commoninterface.evolution.NeuralNetLayer;
 import commoninterface.evolution.Neuron;
 import commoninterface.evolution.Synapse;
 import commoninterface.neuralnetwork.CINeuralNetwork;
+import gui.util.GraphViz;
 
 /**
  * <dl>
@@ -88,7 +89,7 @@ import commoninterface.neuralnetwork.CINeuralNetwork;
  * @author Laszlo Szathmary
  *         (<a href="jabba.laci@gmail.com">jabba.laci@gmail.com</a>)
  */
-public class CINetworkGraphViz {
+public class CINeuralNetworkTopologyGraphViz extends GraphViz {
     /**
      * The dir. where temporary files will be created.
      */
@@ -121,7 +122,7 @@ public class CINetworkGraphViz {
     /**
      * Constructor: creates a new GraphViz object that will contain a graph.
      */
-    public CINetworkGraphViz() {
+    public CINeuralNetworkTopologyGraphViz() {
         String os = System.getProperty("os.name");
 
         if (os.contains("Windows")) {
@@ -142,7 +143,7 @@ public class CINetworkGraphViz {
         resolutionHeight = gd.getDisplayMode().getHeight();
     }
 
-    public CINetworkGraphViz(CINeuralNetwork network) {
+    public CINeuralNetworkTopologyGraphViz(CINeuralNetwork network) {
         this();
         this.network = network;
         this.macroNetwork = (MacroNetwork) network;
@@ -404,7 +405,7 @@ public class CINetworkGraphViz {
         long time = System.currentTimeMillis();
 
         try {
-            img = File.createTempFile("graph_", "." + type, new File(CINetworkGraphViz.TEMP_DIR));
+            img = File.createTempFile("graph_", "." + type, new File(CINeuralNetworkTopologyGraphViz.TEMP_DIR));
             img.deleteOnExit();
             Runtime rt = Runtime.getRuntime();
 
@@ -431,7 +432,7 @@ public class CINetworkGraphViz {
 
             // System.out.println("delete "+(System.currentTimeMillis()-time));
         } catch (IOException ioe) {
-            System.err.println("Error:    in I/O processing of tempfile in dir " + CINetworkGraphViz.TEMP_DIR + "\n");
+            System.err.println("Error:    in I/O processing of tempfile in dir " + CINeuralNetworkTopologyGraphViz.TEMP_DIR + "\n");
             System.err.println("       or in calling external command");
             ioe.printStackTrace();
         } catch (InterruptedException ie) {
@@ -451,7 +452,7 @@ public class CINetworkGraphViz {
     private File writeDotSourceToFile(String str) throws java.io.IOException {
         File temp;
         try {
-            temp = File.createTempFile("graph_", ".dot.tmp", new File(CINetworkGraphViz.TEMP_DIR));
+            temp = File.createTempFile("graph_", ".dot.tmp", new File(CINeuralNetworkTopologyGraphViz.TEMP_DIR));
             temp.deleteOnExit();
             FileWriter fout = new FileWriter(temp);
             fout.write(str);

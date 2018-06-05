@@ -97,14 +97,6 @@ public class EAHSimpleArenaEnvironment extends Environment {
 		}
 	}
 
-	protected Vector2d generateRandomPosition(Simulator simulator, double width, double height) {
-		Random random = simulator.getRandom();
-		double x = random.nextDouble() * width - width / 2;
-		double y = random.nextDouble() * height - height / 2;
-
-		return new Vector2d(x, y);
-	}
-
 	@Override
 	public void update(double time) {
 		for (Robot r : getRobots()) {
@@ -135,18 +127,18 @@ public class EAHSimpleArenaEnvironment extends Environment {
 		return wallThickness;
 	}
 
+	@SuppressWarnings("unchecked")
 	public ArrayList<ODNetworkRobot> getODRobots() {
 
 		ArrayList<? extends Robot> robots = getRobots();
-
 		ArrayList<ODNetworkRobot> odrobots;
 
-		// @SuppressWarnings("unchecked")
 		odrobots = (ArrayList<ODNetworkRobot>) robots;
 
 		return odrobots;
 	}
 
+	@SuppressWarnings("unchecked")
 	public LinkedList<NetworkNode> getLongestRouteFromHome() {
 
 		LinkedList<NetworkNode> longestRoute = new LinkedList<>();
@@ -161,6 +153,7 @@ public class EAHSimpleArenaEnvironment extends Environment {
 		return longestRoute;
 	}
 
+	@SuppressWarnings("unchecked")
 	public LinkedList<NetworkNode> getLongestRouteFromSink() {
 		LinkedList<NetworkNode> longestRoute = new LinkedList<>();
 		longestRoute.add(targetNest);

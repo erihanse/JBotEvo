@@ -44,7 +44,7 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 	protected JTextField longestSinkRoute;
 	protected JTextField totalDistanceTravelled;
 
-	protected CINetworkGraphViz graphViz2;
+	protected CINeuralNetworkTopologyGraphViz graphViz2;
 
 	public AdHocResultViewerGui(JBotSim jBotEvolver, Arguments args) {
 		super(jBotEvolver, args);
@@ -242,7 +242,7 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 		if (showNeuralNetwork && graphViz2 == null) {
 			ODNetworkRobot odRobot = (ODNetworkRobot) simulator.getEnvironment().getRobots().get(0);
 			SimulatedThymioODNetworkController cont = (SimulatedThymioODNetworkController) odRobot.getController();
-			graphViz2 = new CINetworkGraphViz(cont.getCIController().getNetwork());
+			graphViz2 = new CINeuralNetworkTopologyGraphViz(cont.getCIController().getNetwork());
 		}
 		if (showNeuralNetwork)
 			graphViz2.show();
@@ -254,7 +254,7 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 		 * Unfortunately, the way it is now, the neural network is buffered to disk,
 		 * meaning the simulation will lag quite a bit. A workaround is to not display
 		 * the neural networks for each time frame. That will however make the activations on
-		 * each node quite quickly become obsolete.
+		 * each node quickly become obsolete.
 		 */
 		if (simulator.getTime() % 100 == 0) {
 			if (showNeuralNetwork) {
@@ -264,7 +264,7 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 					graphViz2.changeNeuralNetwork(cont.getCIController().getNetwork());
 
 				} else {
-					graphViz2 = new CINetworkGraphViz(cont.getCIController().getNetwork());
+					graphViz2 = new CINeuralNetworkTopologyGraphViz(cont.getCIController().getNetwork());
 				}
 			}
 		}
