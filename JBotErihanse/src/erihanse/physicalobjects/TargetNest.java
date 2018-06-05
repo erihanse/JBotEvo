@@ -31,6 +31,5 @@ public class TargetNest extends Nest implements NetworkNode {
 
 	@Override
 	public void calculateHomeRoute() {
-		// TODO: ???
 	}
 }

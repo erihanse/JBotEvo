@@ -45,13 +45,7 @@ public class CISourceHopsEvaluationFunction extends CIODNEATEvaluationFunction {
 
 	@Override
 	public double updateEnergyLevel(double currentEnergy, RobotCI robot, double[] inputs, double[] outputs) {
-		// TODO:
-		/*
-		 * if direkte kontakt med Home/Dest:   energy -= abs(3-RINR))
-		 * else if del av hele kjede ok:                  energy -= abs(4-RINR)
-		 * else if kontakt med Home ELLER  Dest:  energy-= abs(2-rinr)
-		 * else if ikke kontakt med home/dest:  gaa random
-		 */
+		// TODO
 		return 0;
 	}
 

@@ -31,7 +31,6 @@ public class DestinationHopsSensor extends Sensor {
 
     @Override
     public double getSensorReading(int sensorNumber) {
-        // TODO:
         ArrayList<Robot> robots = env.getRobots();
         int nHops = Integer.MAX_VALUE;
 

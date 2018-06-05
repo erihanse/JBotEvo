@@ -168,7 +168,6 @@ public class AdHocResultViewerGui extends ResultViewerGui {
 		SinkHopsTextField.setHorizontalAlignment(JTextField.CENTER);
 		statusPanel.add(SinkHopsTextField);
 
-		// TODO:
 		statusPanel.add(new JLabel("Longest home route:"));
 		longestHomeRoute = new JTextField("N/A");
 		statusPanel.add(longestHomeRoute);

@@ -38,9 +38,6 @@ public class HomeNest extends Nest implements NetworkNode {
         return targetRoute;
     }
 
-    /**
-     * TODO. Moved this to eahsimplearenaenvironment..?
-     */
     public LinkedList<NetworkNode> getLongestRouteFromHome() {
 
 		LinkedList<NetworkNode> longestRoute = new LinkedList<>();
@@ -55,7 +52,6 @@ public class HomeNest extends Nest implements NetworkNode {
 
 	@Override
 	public void calculateHomeRoute() {
-        // TODO: ???
         return;
 	}
 }

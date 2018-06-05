@@ -23,12 +23,8 @@ import simulation.physicalobjects.PhysicalObject;
     public int getId();
 
     public default ArrayList<ODNetworkRobot> getNeighbourRobots() {
-        // TODO: Implement
         return null;
     };
 
-    /**
-     * TODO: We should rather use ThymioCI.getVirtualPosition
-     */
     public Vector2d getPosition();
 }
